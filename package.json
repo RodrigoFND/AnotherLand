@@ -26,7 +26,8 @@
     "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.2"
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -42,6 +43,7 @@
     "@typescript-eslint/parser": "^5.30.5",
     "babel-loader": "^8.2.5",
     "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.1",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
@@ -55,6 +57,10 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "react-refresh": "^0.14.0",
+    "sass": "^1.53.0",
+    "sass-loader": "^13.0.2",
+    "scss-loader": "^0.0.1",
+    "style-loader": "^3.3.1",
     "typescript": "^4.7.4",
     "webpack": "^5.73.0",
     "webpack-bundle-analyzer": "^4.5.0",
