@@ -1,14 +1,14 @@
 import { useRoutes } from 'react-router-dom'
-import CadastroColaborador from './cadastro-colaborador/cadastro-colaborador.component'
+import RegisterRoutingComponent from './register-routing.component'
 
-function CadastroRouter() {
+function RegisterRouter() {
   const element = useRoutes([
     {
       path: '/',
+      element: <RegisterRoutingComponent />,
       children: [
         {
-          path: 'cadastrocolaborador',
-          element: <CadastroColaborador />,
+          path: 'registeremployee/*',
         },
         // {
         //   path: '*',
@@ -20,4 +20,4 @@ function CadastroRouter() {
   return element
 }
 
-export default CadastroRouter
+export default RegisterRouter

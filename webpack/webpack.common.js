@@ -35,17 +35,16 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '..', './build'),
     filename: 'bundle.js',
+    publicPath: '/', // Para Url funcionar ao refresh
   },
   plugins: [
     new CopyPlugin({
-        patterns: [
-            {from: 'source', to:'dest',noErrorOnMissing:true}
-        ],
+      patterns: [{ from: 'source', to: 'dest', noErrorOnMissing: true }],
     }),
-    new HtmlWebpackPlugin({ //index bundle.js into index.html and place html file into build folder
+    new HtmlWebpackPlugin({
+      //index bundle.js into index.html and place html file into build folder
       template: path.resolve(__dirname, '..', './src/index.html'),
     }),
-  
   ],
   stats: 'errors-only',
 }

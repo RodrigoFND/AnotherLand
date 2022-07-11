@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import cakeSliceReducer from './register-employee-state/register-employee.reducer'
+import registerEmployeeSlice from './register-employee-state/register-employee.reducer'
 const store = configureStore({
   reducer: {
-    registerEmployee: cakeSliceReducer,
+    registerEmployee: registerEmployeeSlice,
   },
 })
 

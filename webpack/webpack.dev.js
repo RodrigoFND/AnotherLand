@@ -7,6 +7,7 @@ module.exports = {
   devServer: {
     hot: true,
     open: true,
+    historyApiFallback: true, // Para Url funcionar ao refresh
   },
   plugins: [
     new ReactRefreshWebpackPlugin(),

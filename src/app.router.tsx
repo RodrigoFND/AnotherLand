@@ -1,6 +1,6 @@
 import { useRoutes } from 'react-router-dom'
 import MainTemplate from './app/components/pages/main/template/main-template.component'
-import Cadastro from './app/components/pages/main/view/cadastro/cadastro.component'
+import RegisterRoutingComponent from './app/components/pages/main/view/cadastro/register-routing.component'
 
 function AppRouter() {
   return useRoutes([
@@ -9,8 +9,8 @@ function AppRouter() {
       element: <MainTemplate />,
       children: [
         {
-          path: 'cadastro/*',
-          element: <Cadastro />,
+          path: 'register/*',
+          element: <RegisterRoutingComponent />,
         },
       ],
     },

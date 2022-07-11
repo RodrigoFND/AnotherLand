@@ -11,7 +11,7 @@ function Sidebar() {
       <h1>Cadastro</h1>
       <ul>
         <li>
-          <Link to="/cadastro/cadastrocolaborador">Cadastro Colaborador</Link>
+          <Link to="/register/registeremployee">Cadastro Colaborador</Link>
         </li>
       </ul>
     </div>
