@@ -5,7 +5,7 @@ export interface RegisterEmployee {
   description: string
   cpfCnpj: string
   employeeType: EmployeeType
-  phones: number[]
+  phones?: number[]
   privilegeGroup?: MRegisterPrivilegeGroup
   inactive: boolean
 }

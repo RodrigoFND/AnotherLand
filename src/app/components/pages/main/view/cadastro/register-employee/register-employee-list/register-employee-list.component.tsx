@@ -1,9 +1,25 @@
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../../../../../../store/hooks'
+import { useEffect } from 'react'
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../../store/hooks'
+import { RegisterEmployeeAction } from '../../../../../../../store/register-employee-state/register-employee.reducer'
+import { RegisterEmployee } from '../../../../../../../model/register-employee/register-employee.models'
 
 function RegisterEmployeeListComponent() {
   const navigate = useNavigate()
-  const employees = useAppSelector((state) => state.registerEmployee.employees)
+  const dispatch = useAppDispatch()
+  const employees: RegisterEmployee[] = useAppSelector(
+    (state) => state.registerEmployee.employees
+  )
+  console.log('teste')
+  useEffect(() => {
+    dispatch(RegisterEmployeeAction.getRegisterEmployee()).then(() =>
+      console.log('SaySomething')
+    )
+  }, [dispatch])
+
   const openEmployeeEditPage = (employeeId: number) => {
     navigate(`../registeremployee/${employeeId}`, { replace: true })
   }
@@ -18,6 +34,13 @@ function RegisterEmployeeListComponent() {
           </ul>
           <button onClick={() => openEmployeeEditPage(employee.id)}>
             Acessar
+          </button>
+          <button
+            onClick={() =>
+              dispatch(RegisterEmployeeAction.getRegisterEmployee())
+            }
+          >
+            teste
           </button>
         </div>
       ))}
