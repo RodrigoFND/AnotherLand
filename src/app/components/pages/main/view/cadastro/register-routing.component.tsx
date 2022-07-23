@@ -1,7 +1,7 @@
-import RegisterEmployeRouter from './register-employee/register-employee.router'
+import { Outlet } from 'react-router-dom'
 
 function RegisterRoutingComponent() {
-  return <RegisterEmployeRouter />
+  return <Outlet />
 }
 
 export default RegisterRoutingComponent

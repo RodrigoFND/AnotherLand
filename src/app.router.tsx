@@ -1,6 +1,10 @@
+import React from 'react'
 import { useRoutes } from 'react-router-dom'
 import MainTemplate from './app/components/pages/main/template/main-template.component'
-import RegisterRoutingComponent from './app/components/pages/main/view/cadastro/register-routing.component'
+
+const RegisterRouter = React.lazy(
+  () => import('./app/components/pages/main/view/cadastro/register.router')
+)
 
 function AppRouter() {
   return useRoutes([
@@ -10,7 +14,11 @@ function AppRouter() {
       children: [
         {
           path: 'register/*',
-          element: <RegisterRoutingComponent />,
+          element: (
+            <React.Suspense fallback={<>...</>}>
+              <RegisterRouter />
+            </React.Suspense>
+          ),
         },
       ],
     },

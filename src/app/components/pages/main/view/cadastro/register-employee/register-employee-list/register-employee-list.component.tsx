@@ -21,10 +21,18 @@ function RegisterEmployeeListComponent() {
   }, [dispatch])
 
   const openEmployeeEditPage = (employeeId: number) => {
-    navigate(`../registeremployee/${employeeId}`, { replace: true })
+    navigate(`../${employeeId}`, { replace: true })
+  }
+
+  const openAddPage = () => {
+    navigate(`../add`, { replace: true })
   }
   return (
     <div>
+      <div>
+        {' '}
+        <button onClick={() => openAddPage()}>Add</button>
+      </div>
       {employees.map((employee) => (
         <div key={employee.id}>
           <ul>
@@ -34,13 +42,6 @@ function RegisterEmployeeListComponent() {
           </ul>
           <button onClick={() => openEmployeeEditPage(employee.id)}>
             Acessar
-          </button>
-          <button
-            onClick={() =>
-              dispatch(RegisterEmployeeAction.getRegisterEmployee())
-            }
-          >
-            teste
           </button>
         </div>
       ))}
