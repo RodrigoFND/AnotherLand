@@ -3,6 +3,7 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './app.router'
 import './app.scss'
+import LoadingSpinner from './app/utils/loading-spinner/loading-spinner'
 
 export const App = () => {
   // const numOfCakes = useAppSelector((state) => state.registerEmployee.numOfCkes)
@@ -10,6 +11,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <AppRouter />
+      <LoadingSpinner />
     </BrowserRouter>
   )
 }

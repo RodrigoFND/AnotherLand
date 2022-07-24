@@ -7,7 +7,7 @@ import axios from 'axios'
 import {
   EmployeeType,
   RegisterEmployee,
-} from '../../model/register-employee/register-employee.models'
+} from '../../model/Register/register-employee/register-employee.models'
 import { API_URL } from '../../services/service'
 
 type RegisterEmployeeState = {

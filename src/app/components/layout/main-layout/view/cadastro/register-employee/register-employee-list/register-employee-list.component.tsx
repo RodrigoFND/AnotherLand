@@ -5,7 +5,7 @@ import {
   useAppSelector,
 } from '../../../../../../../store/hooks'
 import { RegisterEmployeeAction } from '../../../../../../../store/register-employee-state/register-employee.reducer'
-import { RegisterEmployee } from '../../../../../../../model/register-employee/register-employee.models'
+import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
 
 function RegisterEmployeeListComponent() {
   const navigate = useNavigate()

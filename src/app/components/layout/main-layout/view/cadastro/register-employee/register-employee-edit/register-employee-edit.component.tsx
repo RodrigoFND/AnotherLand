@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { RegisterEmployee } from '../../../../../../../model/register-employee/register-employee.models'
+import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
 import { useAppDispatch } from '../../../../../../../store/hooks'
 import { RegisterEmployeeAction } from '../../../../../../../store/register-employee-state/register-employee.reducer'
 
