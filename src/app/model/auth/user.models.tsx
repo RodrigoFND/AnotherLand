@@ -1,4 +1,11 @@
 export interface User {
   id: number
-  token: number
+  description: string
+  password: string
+  token: string
+}
+
+export interface UserLogin {
+  userName: string
+  password: string
 }

@@ -4,7 +4,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../../store/hooks'
-import { RegisterEmployeeAction } from '../../../../../../../store/register-employee-state/register-employee.reducer'
+import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
 import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
 
 function RegisterEmployeeListComponent() {

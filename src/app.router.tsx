@@ -3,7 +3,7 @@ import { useRoutes } from 'react-router-dom'
 import MainTemplate from './app/components/layout/main-layout/template/main-template.component'
 import PagesLayout from './app/components/layout/pages-layout/pages-layout.component'
 import LoginComponent from './app/components/pages/login/login.component'
-import PrivateRoute from './app/utils/private-route'
+import PrivateRoute from './app/utils/private-route/private-route'
 
 const RegisterRouter = React.lazy(
   () =>
