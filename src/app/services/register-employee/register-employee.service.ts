@@ -1,44 +1,44 @@
 import { RegisterEmployee } from '../../model/Register/register-employee/register-employee.models'
-import { BasicService } from '../service'
+import { Service } from '../service'
 
 const URL_PATH = '/registeremployee'
 
-function GetRegisterEmployee(query: string) {
-  return BasicService.Get({
+function getRegisterEmployee(query: string) {
+  return Service.Get({
     path: `${URL_PATH}/${query}`,
   })
 }
 
-function GetRegisterEmployeeById(id: number) {
-  return BasicService.Get({
+function getRegisterEmployeeById(id: number) {
+  return Service.Get({
     path: `${URL_PATH}/${id}`,
   })
 }
 
-function AddRegisterEmployee(employeeData: RegisterEmployee) {
-  return BasicService.Post({
+function addRegisterEmployee(employeeData: RegisterEmployee) {
+  return Service.Post({
     path: `${URL_PATH}`,
     body: employeeData,
   })
 }
 
-function UpdateRegisterEmployee(employeeData: RegisterEmployee) {
-  return BasicService.Put({
+function updateRegisterEmployee(employeeData: RegisterEmployee) {
+  return Service.Put({
     path: `${URL_PATH}`,
     body: employeeData,
   })
 }
 
-function DeleteRegisterEmployee(id: number) {
-  return BasicService.Delete({
+function deleteRegisterEmployee(id: number) {
+  return Service.Delete({
     path: `${URL_PATH}/${id}`,
   })
 }
 
 export const RegisterEmployeeService = {
-  GetRegisterEmployee,
-  GetRegisterEmployeeById,
-  AddRegisterEmployee,
-  UpdateRegisterEmployee,
-  DeleteRegisterEmployee,
+  GetRegisterEmployee: getRegisterEmployee,
+  GetRegisterEmployeeById: getRegisterEmployeeById,
+  AddRegisterEmployee: addRegisterEmployee,
+  UpdateRegisterEmployee: updateRegisterEmployee,
+  DeleteRegisterEmployee: deleteRegisterEmployee,
 }

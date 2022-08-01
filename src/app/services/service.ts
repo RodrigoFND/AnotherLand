@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestHeaders } from 'axios'
 // import { userAction } from '../store/auth-state/user.reducer'
 // import { useAppDispatch, useAppSelector } from '../store/hooks'
 
@@ -10,11 +10,6 @@ export const HTTP_STATUS = Object.freeze({
   REJECTED: 'REJECTED',
 })
 
-// export function ValidateUser(): boolean {
-//   const userLogged = useAppSelector((state) => state.user.isAuthenticated)
-//   return userLogged
-// }
-
 // async function Service() {
 //   const dispatch = useAppDispatch()
 //   const userValid = await ValidateUser()
@@ -23,15 +18,21 @@ export const HTTP_STATUS = Object.freeze({
 //   }
 // }
 
-async function Get(parameters: { path: string }) {
-  const { path } = parameters
+function Login(parameters: {
+  path: string
+  body: unknown
+  headers: AxiosRequestHeaders
+}) {
+  const { path, body } = parameters
   return axios({
-    method: 'get',
+    method: 'post',
     url: `${API_URL + path}`,
+    data: body,
+    headers: parameters.headers,
   })
 }
 
-async function Post(parameters: { path: string; body: unknown }) {
+function Logout(parameters: { path: string; body: unknown }) {
   const { path, body } = parameters
   return axios({
     method: 'post',
@@ -40,7 +41,35 @@ async function Post(parameters: { path: string; body: unknown }) {
   })
 }
 
-async function Put(parameters: { path: string; body: unknown }) {
+// function AuthVerifier(parameters: { path: string; body: unknown }) {
+//   return axios({
+//     method: 'post',
+//     url: `${API_URL + 'verifyAuth'}`,
+//     data: null,
+//     headers: {
+//       token,
+//     },
+//   })
+// }
+
+function Get(parameters: { path: string }) {
+  const { path } = parameters
+  return axios({
+    method: 'get',
+    url: `${API_URL + path}`,
+  })
+}
+
+function Post(parameters: { path: string; body: unknown }) {
+  const { path, body } = parameters
+  return axios({
+    method: 'post',
+    url: `${API_URL + path}`,
+    data: body,
+  })
+}
+
+function Put(parameters: { path: string; body: unknown }) {
   const { path, body } = parameters
   return axios({
     method: 'put',
@@ -49,7 +78,7 @@ async function Put(parameters: { path: string; body: unknown }) {
   })
 }
 
-async function Delete(parameters: { path: string }) {
+function Delete(parameters: { path: string }) {
   const { path } = parameters
   return axios({
     method: 'delete',
@@ -57,7 +86,9 @@ async function Delete(parameters: { path: string }) {
   })
 }
 
-export const BasicService = {
+export const Service = {
+  LoginWithPassword: Login,
+  Logout,
   Get,
   Post,
   Put,

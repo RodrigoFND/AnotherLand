@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userSlice from './auth-state/user.reducer'
+import authSlice from './auth-state/auth.reducer'
 import registerEmployeeSlice from './register/register-employee-state/register-employee.reducer'
 import spinnerPageLoaderSlice from './spinner-page-loader-state/spinner-page-loader.reducer'
 
 const store = configureStore({
   reducer: {
-    user: userSlice,
+    auth: authSlice,
     registerEmployee: registerEmployeeSlice,
     spinnerPageLoader: spinnerPageLoaderSlice,
   },

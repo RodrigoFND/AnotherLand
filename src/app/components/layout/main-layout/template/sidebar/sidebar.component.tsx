@@ -5,13 +5,13 @@
 // } from 'react-bootstrap';
 import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { userAction } from '../../../../../store/auth-state/user.reducer'
+import { AuthAction } from '../../../../../store/auth-state/auth.reducer'
 import { useAppDispatch } from '../../../../../store/hooks'
 
 function Sidebar() {
   const dispatch = useAppDispatch()
   const logout = () => {
-    dispatch(userAction.logout())
+    dispatch(AuthAction.logout())
   }
   return (
     <div>

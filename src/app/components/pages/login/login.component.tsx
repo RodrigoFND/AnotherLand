@@ -1,14 +1,11 @@
-import { unwrapResult } from '@reduxjs/toolkit'
 import { Button } from 'react-bootstrap'
 import { FieldValues, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { UserLogin } from '../../../model/auth/user.models'
-import { userAction } from '../../../store/auth-state/user.reducer'
+import { UserLogin } from '../../../model/auth/auth.models'
+import { AuthAction } from '../../../store/auth-state/auth.reducer'
 import { useAppDispatch } from '../../../store/hooks'
 
 function LoginComponent() {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -17,13 +14,7 @@ function LoginComponent() {
 
   const onSubmit = (data: FieldValues) => {
     const userData = data as UserLogin
-    dispatch(userAction.login(userData))
-      .then(unwrapResult)
-      .then((res) => {
-        if (res) {
-          navigate('/')
-        }
-      })
+    dispatch(AuthAction.loginWithPassword(userData))
   }
   return (
     <div className="grid-container">
