@@ -29,9 +29,6 @@ function Sidebar() {
         <li>
           <Link to="/login">Login</Link>
         </li>
-        <li>
-          <Link to="/logout">Logout</Link>
-        </li>
 
         <Button onClick={() => logout()}>Logout</Button>
       </ul>

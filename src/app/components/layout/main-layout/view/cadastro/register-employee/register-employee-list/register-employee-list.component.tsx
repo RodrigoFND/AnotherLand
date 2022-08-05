@@ -6,6 +6,8 @@ import {
 } from '../../../../../../../store/hooks'
 import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
 import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
+import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
+import { ERoles } from '../../../../../../../model/auth/auth.models'
 
 function RegisterEmployeeListComponent() {
   const navigate = useNavigate()
@@ -13,9 +15,10 @@ function RegisterEmployeeListComponent() {
   const employees: RegisterEmployee[] = useAppSelector(
     (state) => state.registerEmployee.employees
   )
-  console.log('teste')
+  const rolesPermission = useRolePermission()
+
   useEffect(() => {
-    dispatch(RegisterEmployeeAction.getRegisterEmployee()).then(() =>
+    dispatch(RegisterEmployeeAction.getRegisterEmployee('')).then(() =>
       console.log('SaySomething')
     )
   }, [dispatch])
@@ -30,8 +33,10 @@ function RegisterEmployeeListComponent() {
   return (
     <div>
       <div>
-        {' '}
         <button onClick={() => openAddPage()}>Add</button>
+        <button onClick={() => rolesPermission(ERoles.EDIT)}>
+          Check Permission
+        </button>
       </div>
       {employees.map((employee) => (
         <div key={employee.id}>

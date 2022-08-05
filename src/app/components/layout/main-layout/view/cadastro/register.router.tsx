@@ -1,6 +1,5 @@
 import React from 'react'
-import { useRoutes } from 'react-router-dom'
-import RegisterRoutingComponent from './register-routing.component'
+import { Outlet, useRoutes } from 'react-router-dom'
 
 const RegisterEmployeeRouter = React.lazy(
   () => import('./register-employee/register-employee.router')
@@ -19,7 +18,7 @@ function RegisterRouter() {
   const element = useRoutes([
     {
       path: '/*',
-      element: <RegisterRoutingComponent />,
+      element: <Outlet />,
       children: [
         {
           path: 'registeremployee/*',

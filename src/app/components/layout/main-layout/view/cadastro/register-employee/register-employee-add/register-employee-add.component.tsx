@@ -8,7 +8,12 @@
 //   useAppSelector,
 // } from '../../../../../../../store/hooks'
 
+import { Button } from 'react-bootstrap'
+import { ERoles } from '../../../../../../../model/auth/auth.models'
+import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
+
 function RegisterEmployeeAddComponent() {
+  const rolesPermission = useRolePermission()
   // const [userToDelete, SetUserToDelete] = useState(0)
   // const dispatch = useAppDispatch()
   // const newEmployee: RegisterEmployee = {
@@ -22,6 +27,7 @@ function RegisterEmployeeAddComponent() {
   return (
     <div>
       Cadastro Colaborador
+      <Button onClick={() => rolesPermission(ERoles.ADD)}>Check Role</Button>
       {/* <div>
         Deletar Funcionario{' '}
         <button onClick={() => dispatch(deleteRegisterEmployee(userToDelete))}>

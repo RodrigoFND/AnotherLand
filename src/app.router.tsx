@@ -3,7 +3,9 @@ import { useRoutes } from 'react-router-dom'
 import MainTemplate from './app/components/layout/main-layout/template/main-template.component'
 import PagesLayout from './app/components/layout/pages-layout/pages-layout.component'
 import LoginComponent from './app/components/pages/login/login.component'
-import PrivateRoute from './app/utils/private-route/private-route'
+import { ERoles } from './app/model/auth/auth.models'
+import LoadingPage from './app/utils/loading-page/loading-page'
+import ProtectedRoute from './app/utils/protected-route/protected-route'
 
 const RegisterRouter = React.lazy(
   () =>
@@ -15,15 +17,17 @@ function AppRouter() {
     {
       path: '',
       element: (
-        <PrivateRoute>
-          <MainTemplate />
-        </PrivateRoute>
+        <React.Suspense fallback={<LoadingPage />}>
+          <ProtectedRoute ERole={ERoles.READ}>
+            <MainTemplate />
+          </ProtectedRoute>
+        </React.Suspense>
       ),
       children: [
         {
           path: 'register/*',
           element: (
-            <React.Suspense fallback={<>...</>}>
+            <React.Suspense fallback={'Carregando'}>
               <RegisterRouter />
             </React.Suspense>
           ),
@@ -32,7 +36,11 @@ function AppRouter() {
     },
     {
       path: '',
-      element: <PagesLayout />,
+      element: (
+        <React.Suspense fallback={<LoadingPage />}>
+          <PagesLayout />
+        </React.Suspense>
+      ),
       children: [
         {
           path: 'login',

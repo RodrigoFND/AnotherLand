@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react'
 import AppRouter from './app.router'
 import './app.scss'
 import { MToken, UserLogin } from './app/model/auth/auth.models'
+import ToastComponent from './app/shared/components/toast/toast.component'
 import { AuthAction } from './app/store/auth-state/auth.reducer'
 import { useAppDispatch, useAppSelector } from './app/store/hooks'
+import LoadingPage from './app/utils/loading-page/loading-page'
 import SpinnerPageLoader from './app/utils/spinner-page-loader/spinner-page-loader'
 
 export const App = () => {
@@ -87,10 +89,18 @@ export const App = () => {
     }
   }
 
+  const renderLoadingPage = () => {
+    if (!user && token) {
+      return <LoadingPage />
+    }
+  }
+
   return (
     <>
+      {renderLoadingPage()}
       <AppRouter />
       <SpinnerPageLoader />
+      <ToastComponent />
     </>
   )
 }

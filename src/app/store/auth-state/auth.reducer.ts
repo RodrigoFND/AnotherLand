@@ -4,8 +4,9 @@ import {
   createSlice,
 } from '@reduxjs/toolkit'
 import { User, UserLogin } from '../../model/auth/auth.models'
-import { ErrorMessage } from '../../model/root/root-model'
+import { ErrorAction, ErrorMessage } from '../../model/root/root-model'
 import { UserService } from '../../services/auth-service/user.service'
+import reducerErrorToast from '../../utils/reducer-error-toast/reducer-error-toast'
 import { SpinnerPageLoaderAction } from '../spinner-page-loader-state/spinner-page-loader.reducer'
 
 type AuthStateData = {
@@ -13,6 +14,7 @@ type AuthStateData = {
   isAuthenticated: boolean
   token?: string
 }
+
 const initialState: AuthStateData = {
   user: null,
   isAuthenticated: false,
@@ -30,10 +32,9 @@ const loginWithPassword = createAsyncThunk<AuthStateData, UserLogin>(
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data
     } catch (err) {
-      const error: ErrorMessage = err as ErrorMessage
+      const error: ErrorAction = err as ErrorAction
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
-      console.log('loginWithPassword - ' + error.response.data)
-      return thunkApi.rejectWithValue(error.response.data?.message)
+      return thunkApi.rejectWithValue(error.response.data)
     }
   }
 )
@@ -45,10 +46,9 @@ const loginWithToken = createAsyncThunk<AuthStateData, UserLogin>(
       const { data } = await UserService.userLoginWithToken(userData)
       return data
     } catch (err) {
-      const error: ErrorMessage = err as ErrorMessage
+      const error: ErrorAction = err as ErrorAction
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
-      console.log('loginWithToken - ' + error.response.data)
-      return thunkApi.rejectWithValue(error.response.data?.message)
+      return thunkApi.rejectWithValue(error.response.data)
     }
   }
 )
@@ -66,7 +66,9 @@ const loginWithPasswordBuilder = (
       }
     })
     .addCase(loginWithPassword.rejected, (state, action) => {
-      console.log('Toast' + action.payload)
+      reducerErrorToast(action.payload as ErrorMessage)
+      console.log('loginWithPassword - Reject ')
+      console.log(action.payload)
       state.user = null
       state.isAuthenticated = false
       state.token = null
@@ -87,7 +89,9 @@ const loginWithTokenBuilder = (
       }
     })
     .addCase(loginWithToken.rejected, (state, action) => {
-      console.log('Toast' + action.payload)
+      reducerErrorToast(action.payload as ErrorMessage)
+      console.log('loginWithTokenBuilder - Reject ')
+      console.log(action.payload)
       state.user = null
       state.isAuthenticated = false
       state.token = null
