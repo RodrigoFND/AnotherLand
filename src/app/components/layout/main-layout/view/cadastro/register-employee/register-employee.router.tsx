@@ -4,6 +4,7 @@ import ProtectedRoute from '../../../../../../utils/protected-route/protected-ro
 import RegisterEmployeeAddComponent from './register-employee-add/register-employee-add.component'
 import RegisterEmployeeEditComponent from './register-employee-edit/register-employee-edit.component'
 import RegisterEmployeeListComponent from './register-employee-list/register-employee-list.component'
+import RegisterEmployeeLoader from './register-employee-loader/register-employee.loader'
 
 function RegisterEmployeRouter() {
   return useRoutes([
@@ -11,7 +12,9 @@ function RegisterEmployeRouter() {
       path: '',
       element: (
         <ProtectedRoute ERole={ERoles.READ}>
-          <RegisterEmployeeListComponent />
+          <RegisterEmployeeLoader>
+            <RegisterEmployeeListComponent />
+          </RegisterEmployeeLoader>
         </ProtectedRoute>
       ),
     },
@@ -19,7 +22,9 @@ function RegisterEmployeRouter() {
       path: ':id',
       element: (
         <ProtectedRoute ERole={ERoles.EDIT}>
-          <RegisterEmployeeEditComponent />
+          <RegisterEmployeeLoader>
+            <RegisterEmployeeEditComponent />
+          </RegisterEmployeeLoader>
         </ProtectedRoute>
       ),
     },
@@ -27,7 +32,9 @@ function RegisterEmployeRouter() {
       path: 'add',
       element: (
         <ProtectedRoute ERole={ERoles.ADD}>
-          <RegisterEmployeeAddComponent />
+          <RegisterEmployeeLoader>
+            <RegisterEmployeeAddComponent />
+          </RegisterEmployeeLoader>
         </ProtectedRoute>
       ),
     },

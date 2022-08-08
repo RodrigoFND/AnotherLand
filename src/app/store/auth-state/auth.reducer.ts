@@ -3,11 +3,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit'
-import {
-  EAuthenticationStatus,
-  User,
-  UserLogin,
-} from '../../model/auth/auth.models'
+import { User, UserLogin } from '../../model/auth/auth.models'
 import { ErrorAction, ErrorMessage } from '../../model/root/root-model'
 import { UserService } from '../../services/auth-service/user.service'
 import reducerErrorToast from '../../utils/reducer-error-toast/reducer-error-toast'
@@ -15,35 +11,22 @@ import { SpinnerPageLoaderAction } from '../spinner-page-loader-state/spinner-pa
 
 type AuthStateData = {
   user: User
-  previousAuthentication: EAuthenticationStatus
-  authentication: EAuthenticationStatus
+  isAuthenticated: boolean
   token?: string
 }
 
 const initialState: AuthStateData = {
   user: null,
-  previousAuthentication: EAuthenticationStatus.NOTAUTHENTICATED,
-  authentication: EAuthenticationStatus.NOTAUTHENTICATED,
+  isAuthenticated: null,
   token: localStorage.getItem('token'),
 }
 
 const nameSpace = 'authstate'
 
-const setAuthenticationState = (
-  state: AuthStateData,
-  authStatus: EAuthenticationStatus
-) => {
-  state.previousAuthentication = state.authentication
-  state.authentication = authStatus
-}
-
 const loginWithPassword = createAsyncThunk<AuthStateData, UserLogin>(
   `${nameSpace}/loginWithPassword`,
   async (userData, thunkApi) => {
     try {
-      thunkApi.dispatch(
-        userSlice.actions.authenticateUser(EAuthenticationStatus.VERIFYING)
-      )
       thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
       const { data } = await UserService.userLoginWithPassword(userData)
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
@@ -60,9 +43,6 @@ const loginWithToken = createAsyncThunk<AuthStateData, UserLogin>(
   `${nameSpace}/loginWithToken`,
   async (userData, thunkApi) => {
     try {
-      thunkApi.dispatch(
-        userSlice.actions.authenticateUser(EAuthenticationStatus.VERIFYING)
-      )
       const { data } = await UserService.userLoginWithToken(userData)
       return data
     } catch (err) {
@@ -82,7 +62,7 @@ const loginWithPasswordBuilder = (
         state.user = payload.user
         state.token = payload.token
         localStorage.setItem('token', payload.token)
-        setAuthenticationState(state, EAuthenticationStatus.AUTHENTICATED)
+        state.isAuthenticated = true
       }
     })
     .addCase(loginWithPassword.rejected, (state, action) => {
@@ -91,8 +71,8 @@ const loginWithPasswordBuilder = (
       console.log(action.payload)
       state.user = null
       state.token = null
+      state.isAuthenticated = false
       localStorage.removeItem('token')
-      setAuthenticationState(state, EAuthenticationStatus.NOTAUTHENTICATED)
     })
 }
 
@@ -104,8 +84,8 @@ const loginWithTokenBuilder = (
       if (payload) {
         state.user = payload.user
         state.token = payload.token
+        state.isAuthenticated = true
         localStorage.setItem('token', payload.token)
-        setAuthenticationState(state, EAuthenticationStatus.AUTHENTICATED)
       }
     })
     .addCase(loginWithToken.rejected, (state, action) => {
@@ -114,8 +94,8 @@ const loginWithTokenBuilder = (
       console.log(action.payload)
       state.user = null
       state.token = null
+      state.isAuthenticated = false
       localStorage.removeItem('token')
-      setAuthenticationState(state, EAuthenticationStatus.NOTAUTHENTICATED)
     })
 }
 
@@ -123,29 +103,20 @@ const userSlice = createSlice({
   name: nameSpace,
   initialState,
   reducers: {
-    authenticateUser(state, action) {
-      if (!action.payload) {
-        return
-      }
-      setAuthenticationState(state, action.payload)
-    },
     expireUserAuth(state) {
-      state.authentication = EAuthenticationStatus.NOTAUTHENTICATED
-      state.previousAuthentication = EAuthenticationStatus.NOTAUTHENTICATED
+      state.isAuthenticated = false
       state.token = null
       localStorage.removeItem('token')
     },
     logout(state) {
       state.user = null
-      state.authentication = EAuthenticationStatus.NOTAUTHENTICATED
-      state.previousAuthentication = EAuthenticationStatus.NOTAUTHENTICATED
+      state.isAuthenticated = false
       state.token = null
       localStorage.removeItem('token')
     },
     clearAuthState(state) {
       state.user = null
-      state.authentication = EAuthenticationStatus.NOTAUTHENTICATED
-      state.previousAuthentication = EAuthenticationStatus.NOTAUTHENTICATED
+      state.isAuthenticated = false
       state.token = null
       localStorage.removeItem('token')
     },
@@ -158,14 +129,8 @@ const userSlice = createSlice({
 
 export default userSlice.reducer
 
-const userSliceActions = {
-  logout: userSlice.actions.logout,
-  clearAuthState: userSlice.actions.clearAuthState,
-  expireUserAuth: userSlice.actions.expireUserAuth,
-}
-
 export const AuthAction = {
-  ...userSliceActions,
+  ...userSlice.actions,
   loginWithPassword,
   loginWithToken,
 }

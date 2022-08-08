@@ -4,7 +4,9 @@ import {
   ActionReducerMapBuilder,
 } from '@reduxjs/toolkit'
 import { RegisterEmployee } from '../../../model/Register/register-employee/register-employee.models'
+import { ErrorAction, ErrorMessage } from '../../../model/root/root-model'
 import { RegisterEmployeeService } from '../../../services/register-employee/register-employee.service'
+import reducerErrorToast from '../../../utils/reducer-error-toast/reducer-error-toast'
 import { SpinnerPageLoaderAction } from '../../spinner-page-loader-state/spinner-page-loader.reducer'
 
 type RegisterEmployeeStateData = {
@@ -29,9 +31,9 @@ const getRegisterEmployee = createAsyncThunk<RegisterEmployee[], string>(
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data
     } catch (err) {
+      const error: ErrorAction = err as ErrorAction
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
-      console.log('getRegisterEmployee - ' + err)
-      return null
+      return thunkApi.rejectWithValue(error.response.data)
     }
   }
 )
@@ -47,9 +49,9 @@ const getRegisterEmployeeById = createAsyncThunk<RegisterEmployee, number>(
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data as RegisterEmployee
     } catch (err) {
+      const error: ErrorAction = err as ErrorAction
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
-      console.log('getRegisterEmployeeById - ' + err)
-      return null
+      return thunkApi.rejectWithValue(error.response.data)
     }
   }
 )
@@ -63,11 +65,10 @@ const getRegisterEmployeeBuilder = (
         state.employees = payload
       }
     })
-    .addCase(getRegisterEmployee.pending, () => {
-      console.log('Pending')
-    })
-    .addCase(getRegisterEmployee.rejected, () => {
-      console.log('Rejected')
+    .addCase(getRegisterEmployee.rejected, (state, action) => {
+      reducerErrorToast(action.payload as ErrorMessage)
+      console.log('loginWithPassword - Reject ')
+      console.log(action.payload)
     })
 }
 
@@ -78,11 +79,10 @@ const getRegisterEmployeeByIdBuilder = (
     .addCase(getRegisterEmployeeById.fulfilled, (state, { payload }) => {
       state.employee = payload
     })
-    .addCase(getRegisterEmployeeById.pending, () => {
-      console.log('getRegisterEmployeeById - Pending')
-    })
-    .addCase(getRegisterEmployeeById.rejected, () => {
-      console.log('getRegisterEmployeeById - rejected')
+    .addCase(getRegisterEmployeeById.rejected, (state, action) => {
+      reducerErrorToast(action.payload as ErrorMessage)
+      console.log('getRegisterEmployeeById - Reject ')
+      console.log(action.payload)
     })
 }
 

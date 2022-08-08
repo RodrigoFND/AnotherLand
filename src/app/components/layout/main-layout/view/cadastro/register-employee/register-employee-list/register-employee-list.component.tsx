@@ -1,27 +1,15 @@
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../../../../../../store/hooks'
-import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
+import { useAppSelector } from '../../../../../../../store/hooks'
 import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
 import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
 import { ERoles } from '../../../../../../../model/auth/auth.models'
 
 function RegisterEmployeeListComponent() {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
   const employees: RegisterEmployee[] = useAppSelector(
     (state) => state.registerEmployee.employees
   )
   const rolesPermission = useRolePermission()
-
-  useEffect(() => {
-    dispatch(RegisterEmployeeAction.getRegisterEmployee('')).then(() =>
-      console.log('SaySomething')
-    )
-  }, [dispatch])
 
   const openEmployeeEditPage = (employeeId: number) => {
     navigate(`../${employeeId}`, { replace: true })

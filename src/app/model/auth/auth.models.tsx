@@ -26,9 +26,3 @@ export interface UserLogin {
   userName: string
   password: string
 }
-
-export enum EAuthenticationStatus {
-  AUTHENTICATED = 'AUTHENTICATED',
-  VERIFYING = 'VERIFYING',
-  NOTAUTHENTICATED = 'NOTAUTHENTICATED',
-}

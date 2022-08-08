@@ -1,0 +1,23 @@
+.inputWrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 7px;
+  right: 14px;
+}
+
+svg {
+  width: 30px !important;
+  height: 30px !important;
+  color: #929292;
+}
+
+svg:focus {
+  color: #777676;
+}
+
+.input-with-icon {
+  padding-right: 42px !important;
+}

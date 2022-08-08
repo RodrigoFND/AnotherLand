@@ -1,44 +1,34 @@
-import { useEffect, useState } from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { EAuthenticationStatus } from '../../../model/auth/auth.models'
 import { useAppSelector } from '../../../store/hooks'
 
 function PagesLayout() {
   const authState = useAppSelector((state) => state.auth)
-  const [component, setComponent] = useState(null)
   console.log('changes Layout')
   const location = useLocation()
-
-  useEffect(() => {
-    const isUserAuthenticated =
-      authState.authentication == EAuthenticationStatus.AUTHENTICATED
-    const isUserRejected =
-      authState.authentication == EAuthenticationStatus.NOTAUTHENTICATED
-    if (isUserAuthenticated || isUserRejected) {
-      setComponent(<Outlet></Outlet>)
-    }
-  }, [authState])
-
-  const isUserTimeExpired = (): boolean => {
-    const userTimeExpired =
-      authState.user &&
-      authState.authentication == EAuthenticationStatus.NOTAUTHENTICATED
-    return userTimeExpired
+  const isUserTimeExpired = () => {
+    return authState.isAuthenticated == false && authState.user
   }
 
-  if (authState.authentication == EAuthenticationStatus.AUTHENTICATED) {
+  if (authState.isAuthenticated == null) {
+    return <></>
+  }
+
+  if (authState.isAuthenticated) {
     return <Navigate to="/" />
-  }
-
-  if (!authState.user && location.pathname != '/login') {
-    return <Navigate to="/login" />
   }
 
   if (isUserTimeExpired() && location.pathname != '/timeexpired') {
     return <Navigate to="/timeexpired" />
   }
 
-  return <>{component ? component : <> </>}</>
+  if (
+    !authState.isAuthenticated &&
+    !isUserTimeExpired() &&
+    location.pathname != '/login'
+  ) {
+    return <Navigate to="/login" />
+  }
+  return <Outlet />
 }
 
 export default PagesLayout
