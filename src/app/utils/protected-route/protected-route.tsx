@@ -17,7 +17,7 @@ const ProtectedRoute = (props: Props) => {
     return <Navigate to="/login" />
   }
 
-  if (authState.isAuthenticated && !checkRolesPermission(props.ERole)) {
+  if (authState.isAuthenticated && !checkRolesPermission(props.eRole)) {
     toastMessage.toastError("User doesn't have permission to access")
     return <Navigate to="../" />
   }

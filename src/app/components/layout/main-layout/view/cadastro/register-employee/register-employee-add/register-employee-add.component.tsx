@@ -10,9 +10,11 @@
 
 import { Button } from 'react-bootstrap'
 import { ERoles } from '../../../../../../../model/auth/auth.models'
+import { Props } from '../../../../../../../model/root/root-model'
+import CustomBreadcrumbComponent from '../../../../../../../shared/components/breadcrumb/custom-breadcrumb.component'
 import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
 
-function RegisterEmployeeAddComponent() {
+function RegisterEmployeeAddComponent(props: Props) {
   const rolesPermission = useRolePermission()
   // const [userToDelete, SetUserToDelete] = useState(0)
   // const dispatch = useAppDispatch()
@@ -25,10 +27,15 @@ function RegisterEmployeeAddComponent() {
   //   inactive: false,
   // }
   return (
-    <div>
-      Cadastro Colaborador
-      <Button onClick={() => rolesPermission(ERoles.ADD)}>Check Role</Button>
-      {/* <div>
+    <>
+      <CustomBreadcrumbComponent
+        tree={props.tree}
+        header={props.header}
+      ></CustomBreadcrumbComponent>
+      <div>
+        Cadastro Colaborador
+        <Button onClick={() => rolesPermission(ERoles.ADD)}>Check Role</Button>
+        {/* <div>
         Deletar Funcionario{' '}
         <button onClick={() => dispatch(deleteRegisterEmployee(userToDelete))}>
           Deletar
@@ -38,13 +45,14 @@ function RegisterEmployeeAddComponent() {
           onChange={(event) => SetUserToDelete(+event.target.value)}
         />
       </div> */}
-      {/* <div>
+        {/* <div>
         Cadastrar Novo Employee{' '}
         <button onClick={() => dispatch(addRegisterEmployee(newEmployee))}>
           Clique Aqui
         </button>
       </div> */}
-    </div>
+      </div>
+    </>
   )
 }
 

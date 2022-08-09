@@ -11,7 +11,7 @@ function RegisterEmployeeLoader(props: Props) {
   const dispatch = useAppDispatch()
   const [isDependenciesLoaded, setDependenciesLoaded] = useState(false)
   useEffect(() => {
-    switch (props.ERole) {
+    switch (props.eRole) {
       case ERoles.ADD:
         return
 

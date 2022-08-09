@@ -1,5 +1,6 @@
 import { useRoutes } from 'react-router-dom'
 import { ERoles } from '../../../../../../model/auth/auth.models'
+import { Menu } from '../../../../../../utils/menu-tree/menu-tree'
 import ProtectedRoute from '../../../../../../utils/protected-route/protected-route'
 import RegisterEmployeeAddComponent from './register-employee-add/register-employee-add.component'
 import RegisterEmployeeEditComponent from './register-employee-edit/register-employee-edit.component'
@@ -11,9 +12,12 @@ function RegisterEmployeRouter() {
     {
       path: '',
       element: (
-        <ProtectedRoute ERole={ERoles.READ}>
+        <ProtectedRoute eRole={ERoles.READ}>
           <RegisterEmployeeLoader>
-            <RegisterEmployeeListComponent />
+            <RegisterEmployeeListComponent
+              tree={Menu.register.text + ' / Register employee'}
+              header={'Register employee'}
+            />
           </RegisterEmployeeLoader>
         </ProtectedRoute>
       ),
@@ -21,9 +25,12 @@ function RegisterEmployeRouter() {
     {
       path: ':id',
       element: (
-        <ProtectedRoute ERole={ERoles.EDIT}>
+        <ProtectedRoute eRole={ERoles.EDIT}>
           <RegisterEmployeeLoader>
-            <RegisterEmployeeEditComponent />
+            <RegisterEmployeeEditComponent
+              tree={Menu.register.text + ' / Register employee / Edit'}
+              header={'Register employee'}
+            />
           </RegisterEmployeeLoader>
         </ProtectedRoute>
       ),
@@ -31,9 +38,12 @@ function RegisterEmployeRouter() {
     {
       path: 'add',
       element: (
-        <ProtectedRoute ERole={ERoles.ADD}>
+        <ProtectedRoute eRole={ERoles.ADD}>
           <RegisterEmployeeLoader>
-            <RegisterEmployeeAddComponent />
+            <RegisterEmployeeAddComponent
+              tree={Menu.register.text + ' / Register employee / Add'}
+              header={'Register employee'}
+            />
           </RegisterEmployeeLoader>
         </ProtectedRoute>
       ),

@@ -2,7 +2,9 @@ import { ERoles } from '../auth/auth.models'
 
 export class Props {
   children?: JSX.Element
-  ERole?: ERoles
+  eRole?: ERoles
+  tree?: string
+  header?: string
 }
 
 export interface ErrorAction {

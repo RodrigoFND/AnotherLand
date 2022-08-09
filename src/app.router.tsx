@@ -20,7 +20,7 @@ function AppRouter() {
       path: '',
       element: (
         <React.Suspense fallback={<LoadingPage />}>
-          <ProtectedRoute ERole={ERoles.READ}>
+          <ProtectedRoute eRole={ERoles.READ}>
             <MainTemplate />
           </ProtectedRoute>
         </React.Suspense>
