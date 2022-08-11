@@ -1,14 +1,18 @@
 .login-view {
-  background-color: blue;
   height: 100vh;
 }
 
 .logo {
-  width: 300px;
+  width: 400px;
   height: 200px;
   object-fit: cover;
 }
 
 .ttt {
   height: 500px;
+}
+
+.teste {
+  background-image: url('../../../assets/img/al-icon.png');
+  background-repeat: repeat-y;
 }

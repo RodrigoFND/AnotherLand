@@ -1,0 +1,15 @@
+label {
+  font-weight: 500;
+  color: $theme-black;
+  background: -webkit-linear-gradient(
+    top,
+    #ffc0cb00 0%,
+    #ffc0cb00 48%,
+    $theme-smoak-white 48%,
+    $theme-smoak-white 60%,
+    #ffc0cb00 60%,
+    #ffc0cb00 100%
+  );
+  transition: color 0.1s ease-in-out font-weight 0.1s ease-in-out;
+}
+// linear-gradient(top, #ffc0cb00 50%,$theme-white_color 50%);

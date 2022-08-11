@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  min-height: 100vh;
+  font-size: $theme-text-size;
+  font-family: $theme-font-family;
+  font-weight: $theme-text-weight;
+  line-height: $theme-line-height;
+  background-color: $theme-smoak-white;
+}
