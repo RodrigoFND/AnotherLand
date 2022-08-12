@@ -56,12 +56,14 @@ function LoginComponent() {
                   icon={<AiOutlineUser />}
                   register={register}
                   formName={'user'}
+                  errors={errors}
                 />
               </Col>
               <Col className="al-form-group mb-3" sm={12}>
                 <TextInput
                   register={register}
                   formName={'password'}
+                  errors={errors}
                   icon={<RiLockPasswordFill />}
                 />
               </Col>
