@@ -1,9 +1,11 @@
 .al-lg-button {
   width: 100%;
-  height: 50px;
+  height: 53px;
   background-color: $theme-blue;
   box-shadow: $theme-box-shadow;
   border-radius: 12px;
+  font-size: $text-breadcrumb-size;
+  font-weight: $text-breadcrumb-weight;
 }
 
 .al-md-button {

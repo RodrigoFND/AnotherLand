@@ -11,7 +11,7 @@
 }
 
 .al-login {
-  background: linear-gradient(-45deg, $theme-blue, rgb(167, 7, 43));
+  background: linear-gradient(-45deg, rgb(167, 7, 43), $theme-blue);
   animation: gradient 15s ease infinite;
   background-size: 400% 400%;
   .al-input-container {
