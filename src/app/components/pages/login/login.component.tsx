@@ -1,7 +1,6 @@
 import './login.scss'
 import logo from '../../../assets/img/another-land-logo-with-name.png'
 // import al from '../../../assets/img/al-icon.png'
-import TextInput from '../../../shared/components/input/text-input/text-input.component'
 import { AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -11,6 +10,7 @@ import { AuthAction } from '../../../store/auth-state/auth.reducer'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import TextInput from '../../../shared/components/input/text-input/text-input.component'
 
 const formSchema = yup.object().shape({
   user: yup.string().required(),
@@ -32,7 +32,6 @@ function LoginComponent() {
     console.log(data)
     dispatch(AuthAction.loginWithPassword(userData))
   }
-  console.log(errors)
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container
@@ -53,18 +52,22 @@ function LoginComponent() {
             <Row className=" al-input-container justify-content-center py-4">
               <Col className="al-form-group mb-3" sm={12}>
                 <TextInput
-                  icon={<AiOutlineUser />}
-                  register={register}
-                  formName={'user'}
+                  onBlur={(event) => console.log(event.target.value)}
+                  register={{ ...register('user') }}
+                  formName="user"
                   errors={errors}
+                  icon={<AiOutlineUser />}
                 />
               </Col>
               <Col className="al-form-group mb-3" sm={12}>
                 <TextInput
-                  register={register}
-                  formName={'password'}
+                  register={{ ...register('password') }}
+                  formName="password"
                   errors={errors}
                   icon={<RiLockPasswordFill />}
+                  onBlur={(event) => {
+                    console.log(event)
+                  }}
                 />
               </Col>
               <Col className="al-form-group" sm={8}>
@@ -75,21 +78,6 @@ function LoginComponent() {
             </Row>
           </Col>
         </Row>
-
-        {/* <div className="grid-container">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          User
-          <input className="border" {...register('user')} />
-          {errors.user?.message && <span>User is required</span>}
-          <hr />
-          Password
-          <input className="border" {...register('password')} />
-   
-          <hr />
-          <Button type={'submit'}>Login</Button>
-          <hr />
-        </form>
-      </div> */}
       </Container>
     </form>
   )

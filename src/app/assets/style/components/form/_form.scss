@@ -4,4 +4,14 @@
     top: -13px;
     left: 13px;
   }
+  .ai-form-input-error {
+    border: 2px solid red;
+  }
+  .al-form-error-message {
+    display: inline-block;
+    color: $theme-error;
+  }
+  .al-form-error-icon {
+    color: $theme-error;
+  }
 }

@@ -1,41 +1,52 @@
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import { FieldErrors, UseFormRegisterReturn } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
-import { Props } from '../../../../model/root/root-model'
 import './text-input.component.scss'
 import CapitalizeFirstWord from '../../../../utils/string-functions/capitalize-fist-word'
+import React from 'react'
 
-class TextInputProps extends Props {
-  icon?: JSX.Element
-  label?: string
-  isPassword?: boolean
-  register?: UseFormRegister<FieldValues>
+interface InputProps
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   formName?: string
+  label?: string
+  icon?: JSX.Element
   errors?: FieldErrors
+  register?: UseFormRegisterReturn<string>
 }
 
-function TextInputComponent(props: TextInputProps) {
-  const register = props?.register ? props.register(props?.formName) : {}
-  const errors = props?.errors
-  return (
-    <>
+const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
+  (props, ref) => {
+    const { name, formName, label, icon, errors, register, ...rest } = props
+    console.log(errors)
+    console.log(name)
+    return (
       <div
-        className={`al-input-wrapper ${
+        className={`al-input-wrapper   ${
           !props.icon ? 'al-input-icon-disabled' : ''
         }`}
       >
-        <input className="al-input" type={'text'} {...register} />
+        <input
+          className={`al-input ${errors.message ? 'ai-form-input-error' : ''}`}
+          type={'text'}
+          ref={ref}
+          {...register}
+          {...rest}
+        />
         {errors && (
           <ErrorMessage
-            errors={props?.errors}
-            name={props?.formName}
+            errors={errors}
+            name={formName}
             render={({ message }) => <div>{CapitalizeFirstWord(message)}</div>}
           />
         )}
-        {props.icon ? <i className="al-input-icon ">{props.icon}</i> : <></>}
-        {props.label ? <label>{props.label}</label> : <></>}
-      </div>
-    </>
-  )
-}
+        {icon && <i className="al-input-icon ">{props.icon}</i>}
 
-export default TextInputComponent
+        {label && <label>{label}</label>}
+      </div>
+    )
+  }
+)
+TextInput.displayName = 'TextInput'
+export default TextInput

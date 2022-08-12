@@ -30,7 +30,7 @@
   }
   & .al-input:focus ~ .al-input-icon {
     svg {
-      color: $theme-blue !important;
+      color: $theme-blue;
     }
   }
   & .al-input:focus ~ label {
