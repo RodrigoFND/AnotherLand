@@ -9,13 +9,41 @@
     background-position: 0% 50%;
   }
 }
+.al-login-view {
+  height: 100vh;
+}
 
 .al-login {
-  background: linear-gradient(-45deg, rgb(167, 7, 43), $theme-blue);
+  background: linear-gradient(350deg, rgb(167, 7, 43), $theme-blue);
   animation: gradient 15s ease infinite;
   background-size: 400% 400%;
   .al-input-container {
     border-radius: $theme-border;
     border-radius: 12px;
+  }
+}
+
+.al-logo-container {
+  height: 200px;
+}
+
+.al-logo {
+  max-width: 400px;
+  object-fit: contain;
+  position: relative;
+  top: -100px;
+}
+
+.al-login-links {
+  text-decoration: none;
+  color: $theme-orange;
+}
+
+@media (max-width: 444px) {
+  .al-logo {
+    max-width: 240px;
+    object-fit: contain;
+    position: relative;
+    top: 5px;
   }
 }

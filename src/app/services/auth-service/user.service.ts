@@ -26,8 +26,16 @@ function userLogout(userData: User) {
   })
 }
 
+function userForgotPassword(email: string) {
+  return Service.Logout({
+    path: `${URL_PATH}/forgotPassword`,
+    body: { email: email },
+  })
+}
+
 export const UserService = {
   userLoginWithPassword,
   userLoginWithToken,
   userLogout,
+  userForgotPassword,
 }

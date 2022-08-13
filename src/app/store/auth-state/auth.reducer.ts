@@ -53,6 +53,22 @@ const loginWithToken = createAsyncThunk<AuthStateData, UserLogin>(
   }
 )
 
+const forgotPassword = createAsyncThunk<AuthStateData, string>(
+  `${nameSpace}/forgotPassword`,
+  async (email, thunkApi) => {
+    try {
+      thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
+      const { data } = await UserService.userForgotPassword(email)
+      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
+      return data
+    } catch (err) {
+      const error: ErrorAction = err as ErrorAction
+      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
+      return thunkApi.rejectWithValue(error.response.data)
+    }
+  }
+)
+
 const loginWithPasswordBuilder = (
   builder: ActionReducerMapBuilder<AuthStateData>
 ): ActionReducerMapBuilder<AuthStateData> => {
@@ -99,6 +115,16 @@ const loginWithTokenBuilder = (
     })
 }
 
+const ForgotPasswordTokenBuilder = (
+  builder: ActionReducerMapBuilder<AuthStateData>
+): ActionReducerMapBuilder<AuthStateData> => {
+  return builder.addCase(forgotPassword.rejected, (state, action) => {
+    reducerErrorToast(action.payload as ErrorMessage)
+    console.log('ForgotPasswordTokenBuilder - Reject ')
+    console.log(action.payload)
+  })
+}
+
 const userSlice = createSlice({
   name: nameSpace,
   initialState,
@@ -124,6 +150,7 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     loginWithPasswordBuilder(builder)
     loginWithTokenBuilder(builder)
+    ForgotPasswordTokenBuilder(builder)
   },
 })
 
@@ -133,4 +160,5 @@ export const AuthAction = {
   ...userSlice.actions,
   loginWithPassword,
   loginWithToken,
+  forgotPassword,
 }

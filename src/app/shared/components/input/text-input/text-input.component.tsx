@@ -18,9 +18,8 @@ interface InputProps
 
 const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
-    const { name, formName, label, icon, errors, register, ...rest } = props
-    console.log(errors)
-    console.log(name)
+    const { formName, label, icon, errors, register, ...rest } = props
+    const formHasError = errors ? errors[formName] : null
     return (
       <div
         className={`al-input-wrapper   ${
@@ -28,7 +27,7 @@ const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
         }`}
       >
         <input
-          className={`al-input ${errors.message ? 'ai-form-input-error' : ''}`}
+          className={`al-input ${formHasError ? 'ai-form-input-error' : ''}`}
           type={'text'}
           ref={ref}
           {...register}
@@ -38,7 +37,11 @@ const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
           <ErrorMessage
             errors={errors}
             name={formName}
-            render={({ message }) => <div>{CapitalizeFirstWord(message)}</div>}
+            render={({ message }) => (
+              <div className="al-form-error-icon">
+                {CapitalizeFirstWord(message)}
+              </div>
+            )}
           />
         )}
         {icon && <i className="al-input-icon ">{props.icon}</i>}
