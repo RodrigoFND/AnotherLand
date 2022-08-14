@@ -69,6 +69,25 @@ const forgotPassword = createAsyncThunk<AuthStateData, string>(
   }
 )
 
+const resetPassword = createAsyncThunk<
+  AuthStateData,
+  { tokenId: number; password: string }
+>(`${nameSpace}/resetPassword`, async (passwordData, thunkApi) => {
+  try {
+    thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
+    const { data } = await UserService.userResetPassword(
+      passwordData.tokenId,
+      passwordData.password
+    )
+    thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
+    return data
+  } catch (err) {
+    const error: ErrorAction = err as ErrorAction
+    thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
+    return thunkApi.rejectWithValue(error.response.data)
+  }
+})
+
 const loginWithPasswordBuilder = (
   builder: ActionReducerMapBuilder<AuthStateData>
 ): ActionReducerMapBuilder<AuthStateData> => {
@@ -118,11 +137,31 @@ const loginWithTokenBuilder = (
 const ForgotPasswordTokenBuilder = (
   builder: ActionReducerMapBuilder<AuthStateData>
 ): ActionReducerMapBuilder<AuthStateData> => {
-  return builder.addCase(forgotPassword.rejected, (state, action) => {
-    reducerErrorToast(action.payload as ErrorMessage)
-    console.log('ForgotPasswordTokenBuilder - Reject ')
-    console.log(action.payload)
-  })
+  return builder
+    .addCase(forgotPassword.fulfilled, (state, { payload }) => {
+      if (payload) {
+      }
+    })
+    .addCase(forgotPassword.rejected, (state, action) => {
+      reducerErrorToast(action.payload as ErrorMessage)
+      console.log('ForgotPasswordTokenBuilder - Reject ')
+      console.log(action.payload)
+    })
+}
+
+const ResetPasswordBuilder = (
+  builder: ActionReducerMapBuilder<AuthStateData>
+): ActionReducerMapBuilder<AuthStateData> => {
+  return builder
+    .addCase(resetPassword.fulfilled, (state, { payload }) => {
+      if (payload) {
+      }
+    })
+    .addCase(resetPassword.rejected, (state, action) => {
+      reducerErrorToast(action.payload as ErrorMessage)
+      console.log('ResetPasswordBuilder - Reject ')
+      console.log(action.payload)
+    })
 }
 
 const userSlice = createSlice({
@@ -151,6 +190,7 @@ const userSlice = createSlice({
     loginWithPasswordBuilder(builder)
     loginWithTokenBuilder(builder)
     ForgotPasswordTokenBuilder(builder)
+    ResetPasswordBuilder(builder)
   },
 })
 
@@ -161,4 +201,5 @@ export const AuthAction = {
   loginWithPassword,
   loginWithToken,
   forgotPassword,
+  resetPassword,
 }

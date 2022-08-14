@@ -12,9 +12,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import TextInput from '../../../shared/components/input/text-input/text-input.component'
 import { Link } from 'react-router-dom'
-
 const formSchema = yup.object().shape({
-  user: yup.string().required(),
+  userName: yup.string().required(),
   password: yup.string().required(),
 })
 
@@ -33,6 +32,7 @@ function LoginComponent() {
     console.log(data)
     dispatch(AuthAction.loginWithPassword(userData))
   }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container
@@ -42,10 +42,6 @@ function LoginComponent() {
         <Row className="w-100 text-center al-logo-container">
           <Col sm={12}>
             <Image src={logo} className="al-logo"></Image>
-            {/* <picture>
-              <source srcSet={logo} />
-              <img src={logo} alt={'Another land logo'} className="logo" />
-            </picture> */}
           </Col>
         </Row>
 
@@ -55,8 +51,8 @@ function LoginComponent() {
               <Col className="al-form-group mb-3" sm={12}>
                 <TextInput
                   placeholder="User or e-mail"
-                  register={{ ...register('user') }}
-                  formName="user"
+                  register={{ ...register('userName') }}
+                  formName="userName"
                   errors={errors}
                   icon={<AiOutlineUser />}
                 />
@@ -64,6 +60,7 @@ function LoginComponent() {
               <Col className="al-form-group mb-3 text-right" sm={12}>
                 <TextInput
                   placeholder="Password"
+                  type={'password'}
                   register={{ ...register('password') }}
                   formName="password"
                   errors={errors}

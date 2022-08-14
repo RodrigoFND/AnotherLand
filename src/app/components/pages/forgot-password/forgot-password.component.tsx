@@ -1,4 +1,3 @@
-import './forgot-password.component.scss'
 import logo from '../../../assets/img/another-land-logo-with-name.png'
 import { AiFillMail } from 'react-icons/ai'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -10,16 +9,16 @@ import * as yup from 'yup'
 import TextInput from '../../../shared/components/input/text-input/text-input.component'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './forgot-password.component.scss'
 
 const formSchema = yup.object().shape({
-  email: yup.string().required().email(),
+  email: yup.string().required(),
 })
 
 function ForgotPasswordComponent() {
   const dispatch = useAppDispatch()
   const navigation = useNavigate()
-  const redirectionTime = 3
-  let redirectionTimer: NodeJS.Timer = null
+  const redirectionTime = 10
   const [isEmailSended, setEmailSended] = useState(false)
   const [redirectCountDown, setRedirectCountDown] = useState(redirectionTime)
   const {
@@ -31,24 +30,18 @@ function ForgotPasswordComponent() {
   })
 
   useEffect(() => {
-    if (isEmailSended) {
-      startCounter()
-    }
-  }, [isEmailSended])
+    isEmailSended &&
+      redirectCountDown > 0 &&
+      setTimeout(() => {
+        setRedirectCountDown(redirectCountDown - 1)
+      }, 1000)
+  }, [redirectCountDown, isEmailSended])
 
   useEffect(() => {
     if (redirectCountDown <= 0) {
-      clearInterval(redirectionTimer)
       redirectToMainPage()
     }
-    ;() => clearInterval(redirectionTimer)
   }, [redirectCountDown])
-
-  const startCounter = () => {
-    redirectionTimer = setInterval(() => {
-      setRedirectCountDown(redirectionTime - 1)
-    }, 1000)
-  }
 
   const redirectToMainPage = () => {
     navigation('/')
@@ -70,42 +63,43 @@ function ForgotPasswordComponent() {
         <Row className="w-100 text-center al-logo-container">
           <Col sm={12}>
             <Image src={logo} className="al-logo"></Image>
-            {/* <picture>
-              <source srcSet={logo} />
-              <img src={logo} alt={'Another land logo'} className="logo" />
-            </picture> */}
           </Col>
         </Row>
-
         <Row className=" w-100 text-center justify-content-center">
           <Col sm={10} md={6} lg={5} xl={4} xxl={4}>
             <Row className=" al-input-container justify-content-center py-4">
-              <Col className="al-form-group mb-3" sm={12}>
-                {!isEmailSended ? (
-                  <TextInput
-                    placeholder="Enter the recovery e-mail"
-                    register={{ ...register('email') }}
-                    formName="email"
-                    errors={errors}
-                    icon={<AiFillMail />}
-                  />
-                ) : (
-                  <>
-                    <div className="al-login-links">
-                      A new password was sended
-                    </div>
-                    <div className="al-login-links">
-                      Redirecting in: {redirectionTime}{' '}
-                    </div>
-                  </>
-                )}
-              </Col>
+              {isEmailSended && (
+                <Col className="al-form-group mb-3" sm={12}>
+                  <div className="al-login-links">
+                    A link for reset the password was sended.
+                  </div>
+                  <div className="al-login-links">
+                    If you can&apos;t see the email, check on your span folder.
+                  </div>
+                  <div className="al-login-links">
+                    Redirecting in: {redirectCountDown}
+                  </div>
+                </Col>
+              )}
 
-              <Col className="al-form-group" sm={8}>
-                <Button className="al-lg-button" type={'submit'}>
-                  Send
-                </Button>
-              </Col>
+              {!isEmailSended && (
+                <>
+                  <Col className="al-form-group mb-3" sm={12}>
+                    <TextInput
+                      placeholder="Enter the recovery e-mail"
+                      register={{ ...register('email') }}
+                      formName="email"
+                      errors={errors}
+                      icon={<AiFillMail />}
+                    />
+                  </Col>
+                  <Col className="al-form-group" sm={8}>
+                    <Button className="al-lg-button" type={'submit'}>
+                      Send
+                    </Button>
+                  </Col>
+                </>
+              )}
             </Row>
           </Col>
         </Row>

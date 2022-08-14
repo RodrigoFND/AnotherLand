@@ -4,6 +4,7 @@ import MainTemplate from './app/components/layout/main-layout/template/main-temp
 import PagesLayout from './app/components/layout/pages-layout/pages-layout.component'
 import ForgotPasswordComponent from './app/components/pages/forgot-password/forgot-password.component'
 import LoginComponent from './app/components/pages/login/login.component'
+import ResetPasswordComponent from './app/components/pages/reset-password/reset-password.component'
 import UserExpiredComponent from './app/components/pages/user-expired/user-expired.component'
 import { ERoles } from './app/model/auth/auth.models'
 import LoadingPage from './app/utils/loading-page/loading-page'
@@ -59,6 +60,14 @@ function AppRouter() {
       element: (
         <React.Suspense fallback={<LoadingPage />}>
           <ForgotPasswordComponent />
+        </React.Suspense>
+      ),
+    },
+    {
+      path: 'resetpassword/:id',
+      element: (
+        <React.Suspense fallback={<LoadingPage />}>
+          <ResetPasswordComponent />
         </React.Suspense>
       ),
     },

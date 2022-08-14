@@ -1,7 +1,7 @@
 import { FieldErrors, UseFormRegisterReturn } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import './text-input.component.scss'
-import CapitalizeFirstWord from '../../../../utils/string-functions/capitalize-fist-word'
+import camelCaseSeparator from '../../../../utils/string-functions/capitalize-fist-word'
 import React from 'react'
 
 interface InputProps
@@ -39,7 +39,7 @@ const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
             name={formName}
             render={({ message }) => (
               <div className="al-form-error-icon">
-                {CapitalizeFirstWord(message)}
+                {camelCaseSeparator(message)}
               </div>
             )}
           />

@@ -33,9 +33,25 @@ function userForgotPassword(email: string) {
   })
 }
 
+function userVerifyResetToken(tokenId: string) {
+  return Service.Post({
+    path: `${URL_PATH}/verifyResetPasswordToken`,
+    body: { tokenId: tokenId },
+  })
+}
+
+function userResetPassword(tokenId: number, newPassword: string) {
+  return Service.Post({
+    path: `${URL_PATH}/resetPassword`,
+    body: { tokenId: tokenId, password: newPassword },
+  })
+}
+
 export const UserService = {
   userLoginWithPassword,
   userLoginWithToken,
   userLogout,
   userForgotPassword,
+  userVerifyResetToken,
+  userResetPassword,
 }
