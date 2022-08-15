@@ -3,7 +3,7 @@
 // import {
 //   Button, Container, Row, Col,
 // } from 'react-bootstrap';
-// import { Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 // import { Link } from 'react-router-dom'
 // import { AuthAction } from '../../../../../store/auth-state/auth.reducer'
 // import { useAppDispatch } from '../../../../../store/hooks'
@@ -12,11 +12,33 @@
 //   MenuTreeType,
 // } from '../../../../../utils/menu-tree/menu-tree'
 
-function Sidebar() {
+import { useEffect, useState } from 'react'
+import { Props } from '../../../../../model/root/root-model'
+
+class SidebarProps extends Props {
+  toogleSidebar: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function Sidebar(props: SidebarProps) {
+  const [isSmallWindow, setIsSmallWindow] = useState(false)
   // const dispatch = useAppDispatch()
   // const logout = () => {
   //   dispatch(AuthAction.logout())
   // }
+
+  useEffect(() => {
+    window.addEventListener('resize', updateSize)
+    updateSize()
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
+
+  function updateSize() {
+    if (window.innerWidth < 760) {
+      setIsSmallWindow(true)
+    } else {
+      setIsSmallWindow(false)
+    }
+  }
   // const sidebarRootChildren = (
   //   menuTree: MenuTreeType[],
   //   path: string
@@ -51,7 +73,16 @@ function Sidebar() {
   //   })
   // }
   return (
-    <></>
+    <>
+      {isSmallWindow && (
+        <Button
+          onClick={() => props.toogleSidebar((value) => (value = !value))}
+        >
+          {' '}
+          Close Window
+        </Button>
+      )}
+    </>
     // <div>
     //   {sideBarMenuRoot()}
     //   <h1>Cadastro</h1>

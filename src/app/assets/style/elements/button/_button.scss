@@ -6,6 +6,10 @@
   border-radius: 12px;
   font-size: $text-breadcrumb-size;
   font-weight: $text-breadcrumb-weight;
+  &:hover {
+    background-color: $theme-blue;
+    opacity: 0.7;
+  }
 }
 
 .al-md-button {
