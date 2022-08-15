@@ -27,12 +27,12 @@ function Sidebar(props: SidebarProps) {
   // }
 
   useEffect(() => {
-    window.addEventListener('resize', updateSize)
-    updateSize()
-    return () => window.removeEventListener('resize', updateSize)
+    window.addEventListener('resize', checkWindowSize)
+    checkWindowSize()
+    return () => window.removeEventListener('resize', checkWindowSize)
   }, [])
 
-  function updateSize() {
+  function checkWindowSize() {
     if (window.innerWidth < 760) {
       setIsSmallWindow(true)
     } else {
