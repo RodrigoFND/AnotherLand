@@ -1,0 +1,28 @@
+.al-loading-page {
+  background-color: $theme-blue;
+}
+
+.al-loading-page-logo {
+  max-width: 400px;
+  object-fit: contain;
+  position: relative;
+  top: -100px;
+}
+
+.al-loading-page-spinner {
+  display: inline;
+  position: absolute;
+  left: 50.4%;
+  transform: translateX(-50%);
+  top: 60%;
+}
+
+@media (max-width: 444px) {
+  .al-loading-page-logo {
+    max-width: 240px;
+  }
+  .al-loading-page-spinner {
+    top: 44%;
+    left: 52%;
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navigate, useRoutes } from 'react-router-dom'
 import MainTemplate from './app/components/layout/main-layout/template/main-template.component'
+import HomeComponent from './app/components/layout/main-layout/view/cadastro/home/home.component'
 import PagesLayout from './app/components/layout/pages-layout/pages-layout.component'
 import ForgotPasswordComponent from './app/components/pages/forgot-password/forgot-password.component'
 import LoginComponent from './app/components/pages/login/login.component'
@@ -27,6 +28,16 @@ function AppRouter() {
         </React.Suspense>
       ),
       children: [
+        {
+          path: '',
+          element: (
+            <React.Suspense fallback={<LoadingPage />}>
+              <ProtectedRoute eRole={ERoles.READ}>
+                <HomeComponent />
+              </ProtectedRoute>
+            </React.Suspense>
+          ),
+        },
         {
           path: 'register/*',
           element: (
@@ -71,6 +82,7 @@ function AppRouter() {
         </React.Suspense>
       ),
     },
+
     {
       path: '*',
       element: (

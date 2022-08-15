@@ -1,0 +1,20 @@
+.al-home-logo {
+  max-width: 800px;
+}
+
+@media (max-width: 811px) {
+  .al-home-logo {
+    max-width: 500px;
+  }
+}
+@media (max-width: 500px) {
+  .al-home-logo {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 350px) {
+  .al-home-logo {
+    max-width: 240px;
+  }
+}

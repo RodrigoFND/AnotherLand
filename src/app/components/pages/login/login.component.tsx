@@ -1,6 +1,5 @@
 import './login.scss'
 import logo from '../../../assets/img/another-land-logo-with-name.png'
-// import al from '../../../assets/img/al-icon.png'
 import { AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { FieldValues, useForm } from 'react-hook-form'

@@ -1,7 +1,7 @@
 import { FieldErrors, UseFormRegisterReturn } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import './text-input.component.scss'
-import camelCaseSeparator from '../../../../utils/string-functions/capitalize-fist-word'
+import camelCaseSeparator from '../../../../utils/string-functions/camel-case-separator'
 import React from 'react'
 
 interface InputProps
