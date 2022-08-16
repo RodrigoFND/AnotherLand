@@ -1,19 +1,38 @@
-.al-lg-button {
+.al-btn-lg {
   width: 100%;
   height: 53px;
-  background-color: $theme-blue;
-  box-shadow: $theme-box-shadow;
   border-radius: 12px;
-  font-size: $text-breadcrumb-size;
-  font-weight: $text-breadcrumb-weight;
+  font-size: 1rem;
+  font-weight: $text-theme-h1-weight;
+}
+
+.al-btn-md {
+  height: 50px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: $text-theme-h2-weight;
+}
+
+.al-sm-button {
+}
+
+.al-btn-success {
+  background-color: $theme-blue !important;
+  box-shadow: $theme-box-shadow;
   &:hover {
     background-color: $theme-blue;
     opacity: 0.7;
   }
 }
 
-.al-md-button {
-}
-
-.al-sm-button {
+.al-btn-transparent {
+  color: $theme-blue;
+  background-color: #dbdbdb !important;
+  box-shadow: $theme-box-shadow;
+  border: 1px solid transparent;
+  &:hover {
+    color: $theme-blue;
+    border: 1px solid transparent;
+    opacity: 0.7;
+  }
 }

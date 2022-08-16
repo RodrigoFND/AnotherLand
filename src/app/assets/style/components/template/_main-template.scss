@@ -1,12 +1,8 @@
-.al-main-template-container {
-  padding-left: 100px;
-}
-
 .al-side-bar {
   height: 100%;
   width: 0px;
   background-color: $theme-blue;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   transition: all 0.26s ease;
@@ -18,6 +14,9 @@
 }
 
 @media (min-width: 760px) {
+  .al-main-template-container {
+    padding-left: 110px;
+  }
   .al-side-bar {
     width: 100px;
   }

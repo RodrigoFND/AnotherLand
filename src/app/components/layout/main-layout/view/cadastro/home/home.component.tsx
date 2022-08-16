@@ -6,7 +6,7 @@ function HomeComponent() {
   return (
     <Container
       fluid
-      className=" d-flex flex-column align-items-center justify-content-center al-loading-page"
+      className=" d-flex flex-column align-items-center justify-content-center al-loading-page al-home-logo-container"
     >
       <Row className="w-100 text-center">
         <Col sm={12}>

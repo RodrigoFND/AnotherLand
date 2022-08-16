@@ -13,3 +13,15 @@ body {
   line-height: $theme-line-height;
   background-color: $theme-smoak-white;
 }
+
+h1 {
+  color: $theme-black;
+  font-weight: $text-theme-h1-weight;
+  font-size: $text-theme-h1-size;
+}
+
+h2 {
+  color: $theme-black;
+  font-weight: $text-theme-h2-weight;
+  font-size: $text-theme-h2-size;
+}

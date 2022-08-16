@@ -1,7 +1,7 @@
 import { ERoles } from '../auth/auth.models'
 
 export class Props {
-  children?: JSX.Element
+  children?: JSX.Element[] | JSX.Element
   eRole?: ERoles
   tree?: string
   header?: string

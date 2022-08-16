@@ -1,0 +1,16 @@
+.al-breadcrumb-buttons-container {
+  display: flex;
+  justify-content: end;
+  justify-items: center;
+  flex-wrap: wrap;
+}
+
+.al-breadcrumb-buttons:not(:last-child) {
+  margin-right: 8px;
+}
+
+@media (max-width: 575px) {
+  .al-breadcrumb-buttons-container {
+    justify-content: start;
+  }
+}

@@ -5,6 +5,7 @@ import useRolePermission from '../../../../../../../shared/hooks/use-role-permis
 import { ERoles } from '../../../../../../../model/auth/auth.models'
 import { Props } from '../../../../../../../model/root/root-model'
 import CustomBreadcrumbComponent from '../../../../../../../shared/components/breadcrumb/custom-breadcrumb.component'
+import { Button, Col, Container, Row } from 'react-bootstrap'
 
 function RegisterEmployeeListComponent(props: Props) {
   const navigate = useNavigate()
@@ -22,30 +23,37 @@ function RegisterEmployeeListComponent(props: Props) {
   }
   return (
     <>
-      <CustomBreadcrumbComponent
-        tree={props.tree}
-        header={props.header}
-      ></CustomBreadcrumbComponent>
-      <div>
-        <div>
-          <button onClick={() => openAddPage()}>Add</button>
-          <button onClick={() => rolesPermission(ERoles.EDIT)}>
-            Check Permission
-          </button>
-        </div>
-        {employees.map((employee) => (
-          <div key={employee.id}>
-            <ul>
-              <li>Id: {employee.id}</li>
-              <li>Name: {employee.description}</li>
-              <li>Inativo: {employee.inactive}</li>
-            </ul>
-            <button onClick={() => openEmployeeEditPage(employee.id)}>
-              Acessar
-            </button>
-          </div>
-        ))}
-      </div>
+      <CustomBreadcrumbComponent tree={props.tree} header={props.header}>
+        <Button className="al-btn-md al-btn-transparent">Go back</Button>
+        <Button className="al-btn-md al-btn-success">Add employee</Button>
+      </CustomBreadcrumbComponent>
+
+      <Container fluid className="al-form p-3">
+        <Row>
+          <Col>
+            <div>
+              <div>
+                <button onClick={() => openAddPage()}>Add</button>
+                <button onClick={() => rolesPermission(ERoles.EDIT)}>
+                  Check Permission
+                </button>
+              </div>
+              {employees.map((employee) => (
+                <div key={employee.id}>
+                  <ul>
+                    <li>Id: {employee.id}</li>
+                    <li>Name: {employee.description}</li>
+                    <li>Inativo: {employee.inactive}</li>
+                  </ul>
+                  <button onClick={() => openEmployeeEditPage(employee.id)}>
+                    Acessar
+                  </button>
+                </div>
+              ))}
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }

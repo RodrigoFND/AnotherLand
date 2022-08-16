@@ -84,7 +84,7 @@ function UserExpiredComponent() {
               </Col>
 
               <Col className="al-form-group" sm={8}>
-                <Button className="al-lg-button" type={'submit'}>
+                <Button className="al-btn-lg al-btn-success" type={'submit'}>
                   Login
                 </Button>
               </Col>
