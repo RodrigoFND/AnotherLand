@@ -9,8 +9,9 @@
   margin-right: 8px;
 }
 
-@media (max-width: 575px) {
+@media (max-width: 767px) {
   .al-breadcrumb-buttons-container {
+    padding-top: 16px;
     justify-content: start;
   }
 }

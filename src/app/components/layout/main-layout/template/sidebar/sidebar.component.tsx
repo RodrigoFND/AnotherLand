@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { AuthAction } from '../../../../../store/auth-state/auth.reducer'
@@ -16,25 +16,11 @@ class SidebarProps extends Props {
 }
 
 function Sidebar(props: SidebarProps) {
-  const [isSmallWindow, setIsSmallWindow] = useState(false)
   const dispatch = useAppDispatch()
   const logout = () => {
     dispatch(AuthAction.logout())
   }
 
-  useEffect(() => {
-    window.addEventListener('resize', checkWindowSize)
-    checkWindowSize()
-    return () => window.removeEventListener('resize', checkWindowSize)
-  }, [])
-
-  function checkWindowSize() {
-    if (window.innerWidth < 760) {
-      setIsSmallWindow(true)
-    } else {
-      setIsSmallWindow(false)
-    }
-  }
   const sidebarRootChildren = (
     menuTree: MenuTreeType[],
     path: string
@@ -70,12 +56,10 @@ function Sidebar(props: SidebarProps) {
   }
   return (
     <>
-      {isSmallWindow && (
-        <AiOutlineClose
-          className="al-dropdown-sidebar-icon"
-          onClick={() => props.toogleSidebar((value) => (value = !value))}
-        ></AiOutlineClose>
-      )}
+      <AiOutlineClose
+        className="al-dropdown-sidebar-icon"
+        onClick={() => props.toogleSidebar((value) => (value = !value))}
+      ></AiOutlineClose>
       <div>
         {sideBarMenuRoot()}
         <h1>Cadastro</h1>

@@ -19,7 +19,7 @@ function CustomBreadcrumbComponent(props: Props) {
             <h2>{props.header}</h2>
           </div>
         </Col>
-        <Col md={6} className="al-breadcrumb-buttons-container">
+        <Col md={6} className=" al-breadcrumb-buttons-container">
           {children.map((children, index) => {
             return (
               <div className="al-breadcrumb-buttons" key={index}>

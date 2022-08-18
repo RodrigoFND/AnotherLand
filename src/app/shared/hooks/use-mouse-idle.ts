@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 function useMouseIdle() {
   const [isIdle, setIsIdle] = useState(false)
-  const timeForIdle = 500 * 1000
+  const timeForIdle = 1000 * 1000
   let time: NodeJS.Timeout = null
 
   useEffect(() => {
