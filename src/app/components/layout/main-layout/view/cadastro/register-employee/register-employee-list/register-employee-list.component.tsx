@@ -1,3 +1,4 @@
+import './register-employee-list.component.scss'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../../../../../../store/hooks'
 import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
