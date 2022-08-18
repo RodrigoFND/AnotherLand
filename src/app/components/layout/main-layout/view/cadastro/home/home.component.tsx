@@ -1,14 +1,14 @@
 import { Col, Container, Row, Image } from 'react-bootstrap'
-import logo from '../../../../../../assets/img/another-land-logo-with-name.png'
+import logo from '../../../../../../assets/img/al-icon.png'
 import './home.component.scss'
 
 function HomeComponent() {
   return (
-    <Container
-      fluid
-      className=" d-flex flex-column align-items-center justify-content-center al-loading-page al-home-logo-container"
-    >
-      <Row className="w-100 text-center">
+    <Container fluid className="d-flex text-center align-items-center">
+      <Row
+        className=" d-flex text-center align-items-center w-100"
+        style={{ height: '75vh' }}
+      >
         <Col sm={12}>
           <Image className="al-home-logo" src={logo}></Image>
         </Col>

@@ -1,11 +1,11 @@
 .al-header-container {
   box-sizing: border-box;
   height: 97px;
-  display: none;
 }
 
 .al-dropdown-sidebar-icon {
   color: $theme-white_color;
+  display: none;
   
   &:hover {
     opacity: 0.7;
@@ -16,6 +16,9 @@
 @media (max-width: 759px) {
   .al-header-container {
     background-color: $theme-blue;
+    display: block;
+  }
+  .al-dropdown-sidebar-icon {
     display: block;
   }
 }

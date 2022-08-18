@@ -30,5 +30,11 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react-hooks/exhaustive-deps': 'off',
+    'no-restricted-imports': [
+      'error',
+      {
+        'patterns': ['@material-ui/*/*/*']
+      }
+    ]
   },
 }

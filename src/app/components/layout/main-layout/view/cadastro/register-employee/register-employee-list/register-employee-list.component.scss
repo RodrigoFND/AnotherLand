@@ -1,3 +1,37 @@
 .al-register-employee-datagrid {
-  height: 30rem;
+  display: flex;
+  height: 59vh;
+}
+
+.al-register-employee-col {
+  cursor: pointer;
+}
+
+
+.al-icon-click:hover {
+  opacity: .6;
+
+}
+
+.al-icon-click:active {
+  opacity: .3;
+
+}
+
+.al-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.al-dropdown-content {
+  display: block;
+  position: relative;
+  background-color: green;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 2000 !important;
+}
+.al-dropdown:hover .al-dropdown-content {
+  display: block;
 }

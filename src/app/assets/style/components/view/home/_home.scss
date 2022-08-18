@@ -1,13 +1,15 @@
 .al-home-logo-container {
-  height: 872px;
+  height: 300px;
 }
 .al-home-logo {
-  max-width: 872px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }
 
 @media (max-width: 811px) {
   .al-home-logo {
-    max-width: 500px;
+    max-width: 400px;
     object-fit: cover;
   }
 }
