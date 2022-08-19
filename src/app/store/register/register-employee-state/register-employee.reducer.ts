@@ -89,7 +89,11 @@ const getRegisterEmployeeByIdBuilder = (
 const registerEmployeeSlice = createSlice({
   name: namespace,
   initialState,
-  reducers: {},
+  reducers: {
+    setEmployess(state, action) {
+      state.employees.push(action.payload)
+    },
+  },
   extraReducers: (builder) => {
     getRegisterEmployeeBuilder(builder)
     getRegisterEmployeeByIdBuilder(builder)
