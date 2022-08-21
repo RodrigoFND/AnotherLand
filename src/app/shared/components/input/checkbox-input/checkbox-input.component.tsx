@@ -1,42 +1,50 @@
 import { FieldErrors, UseFormRegisterReturn } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
-import './text-input.component.scss'
+import './checkbox-input.component.scss'
 import camelCaseSeparator from '../../../../utils/string-functions/camel-case-separator'
 import React from 'react'
 
-interface InputProps
+interface CheckboxProps
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
   formName?: string
   label?: string
-  icon?: JSX.Element
   errors?: FieldErrors
   register?: UseFormRegisterReturn<string>
 }
 
-const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
+const CheckboxInput = React.forwardRef<HTMLInputElement, CheckboxProps>(
   (props, ref) => {
-    const { formName, label, icon, errors, register, disabled, ...rest } = props
+    const { formName, label, errors, register, disabled, ...rest } = props
     const formHasError = errors ? errors[formName] : null
     return (
       <div
-        className={`al-input-wrapper   ${
-          !props.icon ? 'al-input-icon-disabled' : ''
-        }`}
+        className={`al-input-wrapper al-input-checkbox-container align-self-center`}
+        style={{ display: 'inline-block' }}
       >
         <input
           className={`
-            al-input 
-           ${disabled && 'al-input-disabled'} 
-           ${formHasError && 'ai-form-input-error'}`}
-          disabled={disabled}
-          type={'text'}
+            al-input-check-box
+            ${formHasError && 'ai-form-input-error'}
+            ${disabled && 'al-input-disabled'}`}
+          type={'checkbox'}
           ref={ref}
+          disabled={disabled}
           {...register}
           {...rest}
         />
+        {label && (
+          <label
+            className={`
+            al-input-checkbox-label
+            ms-2
+                ${disabled && 'al-input-disabled'}`}
+          >
+            {label}
+          </label>
+        )}
         {errors && (
           <ErrorMessage
             errors={errors}
@@ -48,23 +56,9 @@ const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
             )}
           />
         )}
-        {icon && (
-          <i
-            className={`al-input-icon 
-            ${disabled && 'al-input-disabled'} `}
-          >
-            {props.icon}
-          </i>
-        )}
-
-        {label && (
-          <label className={`${disabled && 'al-input-disabled'} `}>
-            {label}
-          </label>
-        )}
       </div>
     )
   }
 )
-TextInput.displayName = 'TextInput'
-export default TextInput
+CheckboxInput.displayName = 'CheckboxInput'
+export default CheckboxInput

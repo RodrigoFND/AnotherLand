@@ -38,7 +38,7 @@ const getRegisterEmployee = createAsyncThunk<RegisterEmployee[], string>(
   }
 )
 
-const getRegisterEmployeeById = createAsyncThunk<RegisterEmployee, number>(
+const getRegisterEmployeeById = createAsyncThunk<RegisterEmployee, string>(
   `${namespace}/getRegisterEmployeeById`,
   async (userId, thunkApi) => {
     try {

@@ -25,8 +25,8 @@ function RegisterEmployeRouter() {
     {
       path: ':id',
       element: (
-        <ProtectedRoute eRole={ERoles.EDIT}>
-          <RegisterEmployeeLoader>
+        <ProtectedRoute eRole={ERoles.READ}>
+          <RegisterEmployeeLoader eRole={ERoles.EDIT}>
             <RegisterEmployeeEditComponent
               tree={Menu.register.text + ' / Register employee / Edit'}
               header={'Register employee'}
@@ -39,7 +39,7 @@ function RegisterEmployeRouter() {
       path: 'add',
       element: (
         <ProtectedRoute eRole={ERoles.ADD}>
-          <RegisterEmployeeLoader>
+          <RegisterEmployeeLoader eRole={ERoles.EDIT}>
             <RegisterEmployeeAddComponent
               tree={Menu.register.text + ' / Register employee / Add'}
               header={'Register employee'}

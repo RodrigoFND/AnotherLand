@@ -9,7 +9,7 @@ function getRegisterEmployee(query: string) {
   })
 }
 
-function getRegisterEmployeeById(id: number) {
+function getRegisterEmployeeById(id: string) {
   return Service.Get({
     path: `${URL_PATH}/${id}`,
   })

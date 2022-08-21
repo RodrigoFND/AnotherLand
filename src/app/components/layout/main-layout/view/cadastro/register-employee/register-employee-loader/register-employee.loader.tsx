@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ERoles } from '../../../../../../../model/auth/auth.models'
 import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
 import { Props } from '../../../../../../../model/root/root-model'
@@ -9,17 +9,27 @@ import { RegisterEmployeeAction } from '../../../../../../../store/register/regi
 function RegisterEmployeeLoader(props: Props) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const params = useParams()
   const [isDependenciesLoaded, setDependenciesLoaded] = useState(false)
   useEffect(() => {
+    let loadDependencies = null
     switch (props.eRole) {
       case ERoles.ADD:
         return
 
       case ERoles.EDIT:
+        loadDependencies = async () => {
+          Promise.all([GetRegisterEmployeeById()])
+            .then(() => {
+              setDependenciesLoaded(true)
+            })
+            .catch(() => navigate('../'))
+        }
+        loadDependencies()
         return
 
       default:
-        const loadDependencies = async () => {
+        loadDependencies = async () => {
           Promise.all([GetRegisterEmployee()])
             .then(() => {
               setDependenciesLoaded(true)
@@ -29,11 +39,24 @@ function RegisterEmployeeLoader(props: Props) {
         loadDependencies()
         return
     }
-  }, [])
+  })
 
   const GetRegisterEmployee = () => {
     return new Promise<RegisterEmployee[]>((resolve, reject) => {
       dispatch(RegisterEmployeeAction.getRegisterEmployee(''))
+        .unwrap()
+        .then((response) => {
+          resolve(response)
+        })
+        .catch(() => {
+          reject()
+        })
+    })
+  }
+
+  const GetRegisterEmployeeById = () => {
+    return new Promise<RegisterEmployee>((resolve, reject) => {
+      dispatch(RegisterEmployeeAction.getRegisterEmployeeById(params.id))
         .unwrap()
         .then((response) => {
           resolve(response)

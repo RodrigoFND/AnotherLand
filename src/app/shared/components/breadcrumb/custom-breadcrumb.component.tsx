@@ -7,7 +7,7 @@ function CustomBreadcrumbComponent(props: Props) {
   const tree = props?.tree.replaceAll(' / ', ' > ')
   const children = React.Children.toArray(props.children)
   return (
-    <Container fluid className="py-3 al-bread-crumb-container">
+    <Container fluid className="py-2 al-bread-crumb-container">
       <Row>
         <Col sm={12} className="pt-3 d-flex  justify-items-center">
           <div>

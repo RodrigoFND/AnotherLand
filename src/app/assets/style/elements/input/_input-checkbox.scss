@@ -1,0 +1,15 @@
+.al-input-checkbox-container {
+    position: relative;
+    .al-input-check-box {
+         height: 1em;
+         width: 1em;
+         accent-color: $theme-blue;
+         opacity: 0.9;
+    
+       }
+       .al-input-checkbox-label {
+           position: absolute;
+           top: -3px;
+       }
+   
+}
