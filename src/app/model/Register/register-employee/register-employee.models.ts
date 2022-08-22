@@ -1,12 +1,12 @@
-import { MRegisterPrivilegeGroup } from '../register-privilege-group/register-privilege-group.model'
-
 export interface RegisterEmployee {
   id: number
   description: string
+  email: string
   cpfCnpj: string
   employeeType: EmployeeType
+  password: string
   phones?: number[]
-  privilegeGroup?: MRegisterPrivilegeGroup
+  roleId: number
   inactive: boolean
 }
 

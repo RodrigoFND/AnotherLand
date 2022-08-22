@@ -11,14 +11,14 @@ function useRolePermission() {
       console.log('Not Authorized')
       return false
     }
-    const hasPath = user.pagesPermission.find((page) =>
+    const hasPath = user.role.pagesPermission.find((page) =>
       location.pathname.includes(page.path)
     )
     if (!hasPath) {
       console.log('Authorized')
       return true
     }
-    const hasRole = hasPath.roles.find((pathRole) => pathRole == role)
+    const hasRole = hasPath.roles.find((r) => r == role)
     if (hasRole == null) {
       console.log('Not Authorized')
       return false

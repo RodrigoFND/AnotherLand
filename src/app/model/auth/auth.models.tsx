@@ -1,8 +1,12 @@
+import { MRegisterRolePermission } from '../Register/register-role-permission/register-role-permission.model'
+
 export class User {
   id: number
   userName: string
-  roleType: string
-  pagesPermission: MRolePages[]
+  email: string
+  password: number
+  role: MRegisterRolePermission
+  inactive: boolean
 }
 
 export class MRolePages {
