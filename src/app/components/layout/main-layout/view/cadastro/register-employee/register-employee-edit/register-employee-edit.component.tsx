@@ -9,6 +9,8 @@ import { useAppSelector } from '../../../../../../../store/hooks'
 import * as yup from 'yup'
 import { FieldValues, useForm } from 'react-hook-form'
 import CheckboxInput from '../../../../../../../shared/components/input/checkbox-input/checkbox-input.component'
+import Select from '../../../../../../../shared/components/input/select-input/select-input.component'
+
 const formSchema = yup.object().shape({
   id: yup.number().strict(),
   description: yup.string().required(),
@@ -16,6 +18,7 @@ const formSchema = yup.object().shape({
   employeeType: yup.number().required(),
   phones: yup.array(),
   inactive: yup.boolean().required(),
+  roleId: yup.boolean().required(),
 })
 
 function RegisterEmployeeEditComponent(props: Props) {
@@ -43,7 +46,12 @@ function RegisterEmployeeEditComponent(props: Props) {
     setValue('employeeType', employee.employeeType)
     setValue('phones', employee.phones)
     setValue('inactive', employee.inactive)
+    setValue('roleId', 3)
   }
+
+  // const teste = () => {
+  //   console.log(getValues('roleId'))
+  // }
 
   const goBack = () => {
     navigate(`../`)
@@ -107,6 +115,19 @@ function RegisterEmployeeEditComponent(props: Props) {
                 register={{ ...register('inactive') }}
                 formName="inactive"
                 errors={errors}
+              />
+            </Col>
+            <Col sm={6} lg={5} xl={4} className="mb-3">
+              <Select
+                placeholder="Teste"
+                name="roleId"
+                bindValue="idade"
+                bindLabel="nome"
+                {...register('roleId')}
+                options={[
+                  { nome: 'Joao', idade: 3 },
+                  { nome: 'Ana', idade: 7 },
+                ]}
               />
             </Col>
           </Row>
