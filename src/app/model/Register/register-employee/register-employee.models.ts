@@ -5,7 +5,7 @@ export interface RegisterEmployee {
   cpfCnpj: string
   employeeType: EmployeeType
   password: string
-  phones?: number[]
+  phone?: string
   roleId: number
   inactive: boolean
 }

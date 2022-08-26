@@ -13,9 +13,11 @@ export interface InputProps {
   disabled?: boolean
   type?: HTMLInputTypeAttribute
   className?: string
+  pattern?: string
   onChange?: React.ChangeEventHandler<HTMLElement>
   onBlur?: React.FocusEventHandler<HTMLElement>
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
+  onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
 const Input = React.forwardRef(
@@ -32,6 +34,8 @@ const Input = React.forwardRef(
       disabled,
       type,
       className,
+      pattern,
+      onKeyUp,
     } = inputProps
 
     return (
@@ -48,6 +52,8 @@ const Input = React.forwardRef(
           disabled={disabled}
           placeholder={placeholder}
           onKeyDown={onKeyDown}
+          pattern={pattern || null}
+          onKeyUp={onKeyUp}
         />
 
         {errors && (

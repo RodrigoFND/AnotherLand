@@ -10,15 +10,17 @@ import * as yup from 'yup'
 import { FieldValues, useForm } from 'react-hook-form'
 import CheckboxInput from '../../../../../../../shared/components/input/checkbox-input/checkbox-input.component'
 import Select from '../../../../../../../shared/components/input/select-input/select-input.component'
+import PhoneInput from '../../../../../../../shared/components/input/phone-input/phone-input.component'
+import CpfCnpjInput from '../../../../../../../shared/components/input/cpf-cnpj-input/cpf-cnpj-input.component'
 
 const formSchema = yup.object().shape({
   id: yup.number().strict(),
   description: yup.string().required(),
   cpfCnpj: yup.string().required(),
   employeeType: yup.number().required(),
-  phones: yup.array(),
+  phone: yup.string().required(),
   inactive: yup.boolean().required(),
-  roleId: yup.boolean().required(),
+  roleId: yup.number().required(),
 })
 
 function RegisterEmployeeEditComponent(props: Props) {
@@ -44,7 +46,7 @@ function RegisterEmployeeEditComponent(props: Props) {
     setValue('description', employee.description)
     setValue('cpfCnpj', employee.cpfCnpj)
     setValue('employeeType', employee.employeeType)
-    setValue('phones', employee.phones)
+    setValue('phone', employee.phone)
     setValue('inactive', employee.inactive)
     setValue('roleId', 3)
   }
@@ -101,7 +103,7 @@ function RegisterEmployeeEditComponent(props: Props) {
               />
             </Col>
             <Col sm={6} lg={4} xl={4} className="mb-3">
-              <TextInput
+              <CpfCnpjInput
                 label="CPF/CNPJ"
                 placeholder="Enter a cpf/cnpj"
                 {...register('cpfCnpj')}
@@ -128,6 +130,15 @@ function RegisterEmployeeEditComponent(props: Props) {
                   { nome: 'Joao', idade: 3 },
                   { nome: 'Ana', idade: 7 },
                 ]}
+              />
+            </Col>
+            <Col sm={6} lg={5} xl={4} className="mb-3">
+              <PhoneInput
+                label="Phone"
+                placeholder="(99) 99999-9999"
+                {...register('phone')}
+                name="phone"
+                errors={errors}
               />
             </Col>
           </Row>

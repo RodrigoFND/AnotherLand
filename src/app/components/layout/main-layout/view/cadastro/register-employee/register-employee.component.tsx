@@ -12,7 +12,7 @@ function RegisterEmployeeComponent() {
           <div> Cpf: {employee.cpfCnpj} </div>
           <div> Tipo: {employee.employeeType} </div>
           <div> Inativo: {employee.inactive} </div>
-          <div> Telefones: {employee.phones.length} </div>
+          <div> Telefones: {employee.phone} </div>
         </div>
       ))}
     </div>
