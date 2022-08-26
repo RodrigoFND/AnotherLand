@@ -1,66 +1,70 @@
-import { FieldErrors, UseFormRegisterReturn } from 'react-hook-form'
-import { ErrorMessage } from '@hookform/error-message'
+import { FieldErrors } from 'react-hook-form'
 import './text-input.component.scss'
-import camelCaseSeparator from '../../../../utils/string-functions/camel-case-separator'
 import React from 'react'
+import Input from '../input.component'
 
-interface InputProps
-  extends React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {
-  formName?: string
+interface TextProps {
+  onChange?: React.ChangeEventHandler<HTMLElement>
+  onBlur?: React.FocusEventHandler<HTMLElement>
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
+  name?: string
   label?: string
-  icon?: JSX.Element
+  placeholder?: string
   errors?: FieldErrors
-  register?: UseFormRegisterReturn<string>
+  value?: string | number | readonly string[]
+  disabled?: boolean
+  icon?: JSX.Element
+  type?: 'password' | 'text'
 }
 
-const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
-  (props, ref) => {
-    const { formName, label, icon, errors, register, disabled, ...rest } = props
-    const formHasError = errors ? errors[formName] : null
+const TextInput = React.forwardRef(
+  (inputProps: TextProps, ref: React.Ref<HTMLInputElement>) => {
+    const {
+      onChange,
+      onBlur,
+      onKeyDown,
+      errors,
+      value,
+      name,
+      label,
+      icon,
+      placeholder,
+      disabled,
+      type,
+    } = inputProps
+    const formHasError = errors ? errors[name] : null
     return (
       <div
         className={`al-input-wrapper   ${
-          !props.icon ? 'al-input-icon-disabled' : ''
+          !icon ? 'al-input-icon-disabled' : ''
         }`}
       >
-        <input
+        <Input
           className={`
-            al-input 
-           ${disabled && 'al-input-disabled'} 
-           ${formHasError && 'ai-form-input-error'}`}
-          disabled={disabled}
-          type={'text'}
+          al-input 
+         ${disabled && 'al-input-disabled'} 
+         ${formHasError && 'ai-form-input-error'}`}
+          aria-label="Default select example"
+          type={type ? type : 'text'}
+          value={value}
+          name={name}
           ref={ref}
-          {...register}
-          {...rest}
+          disabled={disabled}
+          placeholder={placeholder}
+          label={label}
+          errors={errors}
+          onChange={onChange}
+          onBlur={onBlur}
+          onKeyDown={onKeyDown}
         />
-        {errors && (
-          <ErrorMessage
-            errors={errors}
-            name={formName}
-            render={({ message }) => (
-              <div className="al-form-error-icon">
-                {camelCaseSeparator(message)}
-              </div>
-            )}
-          />
-        )}
+
         {icon && (
           <i
             className={`al-input-icon 
             ${disabled && 'al-input-disabled'} `}
           >
-            {props.icon}
+            {icon}
           </i>
-        )}
-
-        {label && (
-          <label className={`${disabled && 'al-input-disabled'} `}>
-            {label}
-          </label>
         )}
       </div>
     )

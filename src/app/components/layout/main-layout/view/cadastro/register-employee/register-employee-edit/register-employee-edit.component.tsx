@@ -95,8 +95,8 @@ function RegisterEmployeeEditComponent(props: Props) {
               <TextInput
                 label="Employee name"
                 placeholder="Enter a description"
-                register={{ ...register('description') }}
-                formName="description"
+                {...register('description')}
+                name="description"
                 errors={errors}
               />
             </Col>
@@ -104,16 +104,16 @@ function RegisterEmployeeEditComponent(props: Props) {
               <TextInput
                 label="CPF/CNPJ"
                 placeholder="Enter a cpf/cnpj"
-                register={{ ...register('cpfCnpj') }}
-                formName="cpfCnpj"
+                {...register('cpfCnpj')}
+                name="cpfCnpj"
                 errors={errors}
               />
             </Col>
             <Col sm={6} lg={5} xl={1} className="mb-3 d-flex">
               <CheckboxInput
                 label="Inactive"
-                register={{ ...register('inactive') }}
-                formName="inactive"
+                {...register('inactive')}
+                name="inactive"
                 errors={errors}
               />
             </Col>

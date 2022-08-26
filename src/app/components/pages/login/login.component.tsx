@@ -50,8 +50,8 @@ function LoginComponent() {
               <Col className="al-form-group mb-3" sm={12}>
                 <TextInput
                   placeholder="User or e-mail"
-                  register={{ ...register('userName') }}
-                  formName="userName"
+                  {...register('userName')}
+                  name="userName"
                   errors={errors}
                   icon={<AiOutlineUser />}
                 />
@@ -59,10 +59,10 @@ function LoginComponent() {
               <Col className="al-form-group mb-3 text-right" sm={12}>
                 <TextInput
                   placeholder="Password"
-                  type={'password'}
-                  register={{ ...register('password') }}
-                  formName="password"
+                  {...register('password')}
+                  name="password"
                   errors={errors}
+                  type="password"
                   icon={<RiLockPasswordFill />}
                   onBlur={(event) => {
                     console.log(event)

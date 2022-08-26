@@ -87,8 +87,8 @@ function ForgotPasswordComponent() {
                   <Col className="al-form-group mb-3" sm={12}>
                     <TextInput
                       placeholder="Enter the recovery e-mail"
-                      register={{ ...register('email') }}
-                      formName="email"
+                      {...register('email')}
+                      name="email"
                       errors={errors}
                       icon={<AiFillMail />}
                     />

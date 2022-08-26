@@ -125,8 +125,8 @@ function ResetPasswordComponent() {
                     <Col className="al-form-group mb-3" sm={12}>
                       <TextInput
                         placeholder="Enter the new password"
-                        register={{ ...register('password') }}
-                        formName="password"
+                        {...register('password')}
+                        name="password"
                         errors={errors}
                         icon={<RiLockPasswordFill />}
                       />
@@ -135,8 +135,8 @@ function ResetPasswordComponent() {
                       <TextInput
                         type={'password'}
                         placeholder="Confirm password"
-                        register={{ ...register('confirmPassword') }}
-                        formName="confirmPassword"
+                        {...register('confirmPassword')}
+                        name="confirmPassword"
                         errors={errors}
                         icon={<RiLockPasswordFill />}
                       />
