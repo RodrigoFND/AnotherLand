@@ -37,7 +37,7 @@ const Input = React.forwardRef(
       pattern,
       onKeyUp,
     } = inputProps
-
+    const formHasError = errors ? errors[name] : null
     return (
       <>
         <input
@@ -61,17 +61,13 @@ const Input = React.forwardRef(
             errors={errors}
             name={name}
             render={({ message }) => (
-              <div className="al-form-error-icon">
+              <div className={`${formHasError && 'al-form-error-message'}`}>
                 {camelCaseSeparator(message)}
               </div>
             )}
           />
         )}
-        {label && (
-          <label className={`${disabled && 'al-input-disabled'} `}>
-            {label}
-          </label>
-        )}
+        {label && <label>{label}</label>}
       </>
     )
   }

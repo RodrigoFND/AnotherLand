@@ -17,6 +17,7 @@ $primary-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
 
 // Border
 $theme-border: 1.5px solid $theme-light-grey;
+$check-input-border: 1.5px solid $placeholder-color;
 
 // Text
 // Text-theme
@@ -30,7 +31,8 @@ $text-theme-h1-size: 24px;
 $text-theme-h2-weight: 400;
 $text-theme-h2-size: 20px;
 // Text-Radio-Button
-$text-radio-weight: 400;
+$text-radio-weight: 500;
 $text-radio-size: 14px;
+$text-radio-color: $theme-black
 
 // Button-theme

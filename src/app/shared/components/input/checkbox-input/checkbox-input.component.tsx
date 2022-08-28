@@ -13,7 +13,7 @@ interface TextProps {
   errors?: FieldErrors
   value?: string | number | readonly string[]
   disabled?: boolean
-  icon?: JSX.Element
+  children?: JSX.Element | JSX.Element[]
 }
 
 const CheckboxInput = React.forwardRef(
@@ -26,44 +26,39 @@ const CheckboxInput = React.forwardRef(
       value,
       name,
       label,
-      icon,
       placeholder,
+      children,
       disabled,
     } = checkBoxProps
     const formHasError = errors ? errors[name] : null
     return (
       <div
-        className={`al-input-wrapper   ${
-          !icon ? 'al-input-icon-disabled' : ''
-        }`}
+        className={`
+        d-flex
+        overflow-hidden
+   
+        ${formHasError && 'ai-form-input-error'}
+        `}
       >
-        <Input
-          className={`
-          al-input 
-         ${disabled && 'al-input-disabled'} 
+        <div className="d-inline">
+          <Input
+            className={`
          ${formHasError && 'ai-form-input-error'}`}
-          aria-label="Default select example"
-          type={'checkbox'}
-          value={value}
-          name={name}
-          ref={ref}
-          disabled={disabled}
-          placeholder={placeholder}
-          label={label}
-          errors={errors}
-          onChange={onChange}
-          onBlur={onBlur}
-          onKeyDown={onKeyDown}
-        />
+            aria-label="Default select example"
+            type={'checkbox'}
+            value={value}
+            name={name}
+            ref={ref}
+            disabled={disabled}
+            placeholder={placeholder}
+            label={label}
+            onChange={onChange}
+            onBlur={onBlur}
+            onKeyDown={onKeyDown}
+          />
+        </div>
 
-        {icon && (
-          <i
-            className={`al-input-icon 
-            ${disabled && 'al-input-disabled'} `}
-          >
-            {icon}
-          </i>
-        )}
+        <div className="ms-2 checbox-text text-truncate ">{children}</div>
       </div>
     )
   }

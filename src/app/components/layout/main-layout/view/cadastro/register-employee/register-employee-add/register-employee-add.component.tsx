@@ -1,57 +1,55 @@
-// import { useState } from 'react'
-// import {
-//   EmployeeType,
-//   RegisterEmployee,
-// } from '../../../../../../../model/register-employee/register-employee.models'
-// import {
-//   useAppDispatch,
-//   useAppSelector,
-// } from '../../../../../../../store/hooks'
-
-import { Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 import { ERoles } from '../../../../../../../model/auth/auth.models'
+import {
+  EmployeeType,
+  RegisterEmployee,
+} from '../../../../../../../model/Register/register-employee/register-employee.models'
 import { Props } from '../../../../../../../model/root/root-model'
-import CustomBreadcrumbComponent from '../../../../../../../shared/components/breadcrumb/custom-breadcrumb.component'
-import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
+import { useAppDispatch } from '../../../../../../../store/hooks'
+import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
+import RegisterEmployeeComponent from '../register-employee.component'
 
 function RegisterEmployeeAddComponent(props: Props) {
-  const rolesPermission = useRolePermission()
-  // const [userToDelete, SetUserToDelete] = useState(0)
-  // const dispatch = useAppDispatch()
-  // const newEmployee: RegisterEmployee = {
-  //   id: employess.length + 1,
-  //   description: `Rodrigo ${employess.length + 1}`,
-  //   cpfCnpj: '037.723.721-39',
-  //   employeeType: EmployeeType.FISICA,
-  //   phones: [],
-  //   inactive: false,
-  // }
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const employee: RegisterEmployee = {
+    id: 0,
+    description: '',
+    email: '',
+    cpfCnpj: '',
+    employeeType: EmployeeType.LEGALPERSON,
+    password: '',
+    phone: '',
+    roleId: 2,
+    inactive: false,
+  }
+
+  const addNewEmployee = (newEmployee: RegisterEmployee) => {
+    dispatch(RegisterEmployeeAction.addRegisterEmployee(newEmployee))
+      .unwrap()
+      .then(() => {
+        goBackPage()
+      })
+      .catch(() => {
+        return
+      })
+  }
+
+  const goBackPage = () => {
+    navigate(`../`)
+  }
+
   return (
     <>
-      <CustomBreadcrumbComponent
-        tree={props.tree}
-        header={props.header}
-      ></CustomBreadcrumbComponent>
-      <div>
-        Cadastro Colaborador
-        <Button onClick={() => rolesPermission(ERoles.ADD)}>Check Role</Button>
-        {/* <div>
-        Deletar Funcionario{' '}
-        <button onClick={() => dispatch(deleteRegisterEmployee(userToDelete))}>
-          Deletar
-        </button>
-        <input
-          value={userToDelete}
-          onChange={(event) => SetUserToDelete(+event.target.value)}
+      {employee && (
+        <RegisterEmployeeComponent
+          onChangeEmployee={addNewEmployee}
+          employee={employee}
+          tree={props.tree}
+          eRole={ERoles.ADD}
+          header={props.header}
         />
-      </div> */}
-        {/* <div>
-        Cadastrar Novo Employee{' '}
-        <button onClick={() => dispatch(addRegisterEmployee(newEmployee))}>
-          Clique Aqui
-        </button>
-      </div> */}
-      </div>
+      )}
     </>
   )
 }

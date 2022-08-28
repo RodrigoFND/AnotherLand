@@ -174,7 +174,7 @@ const deleteRegisterEmployeeBuilder = (
     .addCase(deleteRegisterEmployee.fulfilled, (state, { payload }) => {
       toastMessage.toastSuccess('Employee deleted successfully')
       state.employees = state.employees.filter(
-        (employee) => employee.id == payload
+        (employee) => employee.id != payload
       )
     })
     .addCase(deleteRegisterEmployee.rejected, (state, action) => {

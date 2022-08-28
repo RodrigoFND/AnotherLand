@@ -11,12 +11,12 @@ function CustomBreadcrumbComponent(props: Props) {
       <Row>
         <Col sm={12} className="pt-3 d-flex  justify-items-center">
           <div>
-            <h1>{tree}</h1>
+            <h2>{tree}</h2>
           </div>
         </Col>
         <Col className="pt-3 d-flex  justify-items-start">
           <div>
-            <h2>{props.header}</h2>
+            <h1>{props.header}</h1>
           </div>
         </Col>
         <Col md={6} className=" al-breadcrumb-buttons-container">

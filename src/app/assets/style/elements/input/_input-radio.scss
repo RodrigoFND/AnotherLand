@@ -1,0 +1,53 @@
+input[type="radio"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: white;
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: currentColor;
+  width: 20px;
+  height: 20px;
+  border: $check-input-border;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="radio"]:checked {
+  border-color: $theme-blue;
+}
+
+input[type="radio"]:disabled {
+  border: $check-input-border;
+  background-color: $theme-light-grey;
+  color: $theme-light-grey;
+  cursor: not-allowed;
+}
+
+.radio-text {
+  font-size: $text-radio-size;
+  font-weight: $text-radio-weight;
+  color: $text-radio-color;
+ }
+

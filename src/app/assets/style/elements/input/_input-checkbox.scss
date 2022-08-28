@@ -1,15 +1,62 @@
-.al-input-checkbox-container {
-    position: relative;
-    .al-input-check-box {
-         height: 1em;
-         width: 1em;
-         accent-color: $theme-blue;
-         opacity: 0.9;
+// .al-input-checkbox-container {
+//     position: relative;
+//     .al-input-check-box {
+//          height: 1em;
+//          width: 1em;
+//          accent-color: $theme-blue;
+//          opacity: 0.9;
     
-       }
-       .al-input-checkbox-label {
-           position: absolute;
-           top: -3px;
-       }
+//        }
+//        .al-input-checkbox-label {
+//            position: absolute;
+//            top: -3px;
+//        }
    
-}
+// }
+input[type="checkbox"] {
+    display: grid;
+    place-content: center;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    border: $check-input-border;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"]::before { // internal "CORRECT 'V' STYLE"
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    background-color: CanvasText;
+     transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    border-color: $theme-blue;
+  }
+  
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+   outline: 1.5px solid red;
+  }
+  
+  input[type="checkbox"]:checked {
+    border: 2px solid $theme-blue;
+  
+  }
+  
+  input[type="checkbox"]:disabled {
+    border: $check-input-border;
+    background-color: $theme-light-grey;
+    color: $theme-light-grey;
+    cursor: not-allowed;
+  }
+
+ .checbox-text {
+  font-size: $text-radio-size;
+  font-weight: $text-radio-weight;
+  color: $text-radio-color;
+ }

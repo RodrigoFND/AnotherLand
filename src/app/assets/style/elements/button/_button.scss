@@ -27,7 +27,7 @@
 
 .al-btn-transparent {
   color: $theme-blue;
-  background-color: #dbdbdb !important;
+  background-color: $theme-light-grey !important;
   box-shadow: $theme-box-shadow;
   border: 1px solid transparent;
   &:hover {

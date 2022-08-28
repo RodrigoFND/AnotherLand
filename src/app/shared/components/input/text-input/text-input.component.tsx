@@ -35,15 +35,15 @@ const TextInput = React.forwardRef(
     const formHasError = errors ? errors[name] : null
     return (
       <div
-        className={`al-input-wrapper   ${
-          !icon ? 'al-input-icon-disabled' : ''
-        }`}
+        className={`
+        al-input-wrapper 
+        ${icon && 'al-input-has-right-icon'}
+        ${formHasError && 'ai-form-input-error'}
+        `}
       >
         <Input
           className={`
-          al-input 
-         ${disabled && 'al-input-disabled'} 
-         ${formHasError && 'ai-form-input-error'}`}
+         `}
           aria-label="Default select example"
           type={type ? type : 'text'}
           value={value}
@@ -60,8 +60,11 @@ const TextInput = React.forwardRef(
 
         {icon && (
           <i
-            className={`al-input-icon 
-            ${disabled && 'al-input-disabled'} `}
+            className={`
+          al-input-icon-right
+          ${formHasError && 'al-form-error-icon'}
+          
+          `}
           >
             {icon}
           </i>

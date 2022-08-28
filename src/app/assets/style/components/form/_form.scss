@@ -9,7 +9,15 @@
     left: 13px;
   }
   .ai-form-input-error {
-    border: 2px solid red;
+    input {
+      border: 2px solid red;
+    }
+    select {
+      border: 2px solid red;
+    }
+    label {
+      color: red
+    }
   }
   .al-form-error-message {
     display: inline-block;

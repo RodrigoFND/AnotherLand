@@ -11,6 +11,17 @@ export interface RegisterEmployee {
 }
 
 export enum EmployeeType {
-  FISICA = 0,
-  JURIDICA = 1,
+  LEGALPERSON = 0,
+  LEGALENTITY = 1,
 }
+
+export const EmployeeTypeDescription = [
+  {
+    id: EmployeeType.LEGALPERSON,
+    description: 'Legal person',
+  },
+  {
+    id: EmployeeType.LEGALENTITY,
+    description: 'Legal Entity',
+  },
+]

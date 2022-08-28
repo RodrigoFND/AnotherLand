@@ -1,6 +1,9 @@
 import './register-employee-list.component.scss'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../../../../../../store/hooks'
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../../../store/hooks'
 import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
 import { MMuiDataGrid, Props } from '../../../../../../../model/root/root-model'
 import CustomBreadcrumbComponent from '../../../../../../../shared/components/breadcrumb/custom-breadcrumb.component'
@@ -12,13 +15,19 @@ import {
   GridRowParams,
 } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
-import SearchInputMuiDataGrid from '../../../../../../../shared/components/input/search-input-mui-datagrid/search-input-mui-datagrid'
+import SearchInputMuiDataGrid from '../../../../../../../shared/components/input/search-input-mui-datagrid/search-input-mui-datagrid.component'
+import { toastWarning } from '../../../../../../../shared/components/toast/toast.component'
+import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
+import { ERoles } from '../../../../../../../model/auth/auth.models'
+import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
 
 class MEmployeeGrid extends MMuiDataGrid {
   employees: RegisterEmployee[]
+  onRowRemoveClick: (employee: RegisterEmployee) => void
 }
 
 const EmployeeGrid = (props: MEmployeeGrid) => {
+  const { filter, employees, onRowClick, onRowRemoveClick } = props
   const columns: GridColumns<RegisterEmployee> = [
     {
       field: 'id',
@@ -49,7 +58,7 @@ const EmployeeGrid = (props: MEmployeeGrid) => {
       getActions: (params: GridRowParams) => [
         <GridActionsCellItem
           key={0}
-          onClick={() => onRowClick(params)}
+          onClick={() => onRowRemoveClick(params.row as RegisterEmployee)}
           label="Delete"
           showInMenu
         />,
@@ -57,18 +66,13 @@ const EmployeeGrid = (props: MEmployeeGrid) => {
     },
   ]
 
-  const onRowClick = (params: GridRowParams) => {
-    const rowData = params.row as RegisterEmployee
-    console.log(rowData)
-  }
-
   return (
     <>
       <DataGrid
-        filterModel={props?.filter || undefined}
+        filterModel={filter || undefined}
         columns={columns}
-        rows={props.employees}
-        onRowClick={props?.onRowClick}
+        rows={employees}
+        onRowClick={onRowClick}
         getRowClassName={() => {
           return 'al-register-employee-col'
         }}
@@ -82,8 +86,10 @@ const EmployeeGrid = (props: MEmployeeGrid) => {
 }
 
 function RegisterEmployeeListComponent(props: Props) {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-
+  const checkRolesPermission = useRolePermission()
+  const user = useAppSelector((state) => state.auth.user)
   const employessData = useAppSelector(
     (state) => state.registerEmployee.employees
   )
@@ -94,10 +100,15 @@ function RegisterEmployeeListComponent(props: Props) {
   useEffect(() => {
     setEmployeesDataGridRows(employessData)
   }, [employessData])
-  // const rolesPermission = useRolePermission()
 
   const openEmployeeEditPage = (GridRowParams: GridRowParams) => {
     const employeeData = GridRowParams.row as RegisterEmployee
+    const isUserAdmin = user.id == 1
+    const isEmployeeAdmin = employeeData.roleId == 1
+    if (!isUserAdmin && isEmployeeAdmin) {
+      toastWarning('Only admin profile is allow to access this employee.')
+      return
+    }
     navigate(`../${employeeData.id}`)
   }
 
@@ -105,13 +116,18 @@ function RegisterEmployeeListComponent(props: Props) {
     navigate(`../add`, { replace: true })
   }
 
+  const deleteEmployee = (employeeToDelete: RegisterEmployee) => {
+    if (!checkRolesPermission(ERoles.REMOVE)) {
+      toastWarning("User doesn't have permission to remove employee")
+      return
+    }
+    dispatch(RegisterEmployeeAction.deleteRegisterEmployee(employeeToDelete.id))
+  }
+
   return (
     <>
       <CustomBreadcrumbComponent tree={props.tree} header={props.header}>
-        <Button
-          className="al-btn-md al-btn-success"
-          onClick={() => openAddPage()}
-        >
+        <Button className="al-btn-md al-btn-success" onClick={openAddPage}>
           Add employee
         </Button>
       </CustomBreadcrumbComponent>
@@ -130,6 +146,7 @@ function RegisterEmployeeListComponent(props: Props) {
               employees={employeesDataGridRows}
               filter={gridFilter}
               onRowClick={openEmployeeEditPage}
+              onRowRemoveClick={deleteEmployee}
             />
           </Col>
         </Row>

@@ -1,51 +1,129 @@
-.al-input-wrapper {
-  position: relative;
-  .al-input {
-    box-sizing: border-box;
-    width: 100%;
-    height: 48px;
-    padding-left: 24px;
-    padding-right: 53px;
-    border: $theme-border;
-    border-radius: 10px;
-    outline: 1.5px solid #5468ff00;
-    transition: border-color 0.05s ease-in-out;
-    transition: outline-color 0.05s ease-in-out;
+@import './_input-search';
+@import './_input-select';
+@import './_input-checkbox';
+@import './_input-radio';
+
+input:not([type='checkbox']):not([type='radio']) {
+  box-sizing: border-box ;
+  width: 100%  ;
+  height: 48px  ;
+  padding-left: 24px ;
+  padding-right: 24px ;
+  border: $theme-border  ;
+  border-radius: 10px  ;
+  outline: 1.5px solid #5468ff00  ;
+  transition: border-color 0.05s ease-in-out  ;
+  transition: outline-color 0.05s ease-in-out  ;
+  box-shadow: none ;
+  &:focus {
+    border: 2px solid $theme-blue;
   }
-  .al-input-disabled {
-    opacity: 0.7;
-  }
-  .al-input-icon {
-    position: absolute;
-    top: 9px;
-    right: 14px;
-    svg {
-      width: 27px;
-      height: 27px;
-      color: $placeholder-color;
-      transition: color 0.05s ease-in-out;
-    }
-  }
-  & .al-input:focus {
-    border-color: $theme-blue;
-    outline-color: $theme-blue;
-  }
-  & .al-input:focus ~ .al-input-icon {
-    svg {
-      color: $theme-blue;
-    }
-  }
-  & .al-input:focus ~ label {
-    color: $theme-blue;
-    font-weight: 600;
+  &:disabled {
+    cursor: not-allowed  ;
   }
 }
 
-.al-input-icon-disabled {
-  .al-input {
-    padding-right: 24px;
-  }
-  .al-input-icon {
-    display: none;
+.al-input-has-left-icon {
+  input {
+    padding-left: 52px !important
   }
 }
+
+.al-input-has-right-icon {
+  input {
+    padding-right: 52px !important
+  }
+}
+
+.al-input-wrapper {
+  position: relative;
+  .al-input-icon-right {
+    position: absolute;
+        top: 9px;
+        right: 14px;
+        svg {
+          width: 27px;
+          height: 27px;
+          color: $placeholder-color;
+          transition: color 0.05s ease-in-out;
+        }
+  }
+    .al-input-icon-left {
+      position: absolute;
+          top: 9px;
+          left: 14px;
+          svg {
+            width: 27px;
+            height: 27px;
+            color: $placeholder-color;
+            transition: color 0.05s ease-in-out;
+          }
+    }
+        & input:focus ~ .al-input-icon-left {
+          svg {
+            color: $theme-blue;
+          }
+        }
+        & input:focus ~ .al-input-icon-right {
+          svg {
+            color: $theme-blue;
+          }
+        }
+        & input:focus ~ label {
+          color: $theme-blue;
+          font-weight: 600;
+        }
+}
+
+
+// .al-input-wrapper {
+//   position: relative;
+//   .al-input {
+//     box-sizing: border-box;
+//     width: 100%;
+//     height: 48px;
+//     padding-left: 24px;
+//     padding-right: 53px;
+//     border: $theme-border;
+//     border-radius: 10px;
+//     outline: 1.5px solid #5468ff00;
+//     transition: border-color 0.05s ease-in-out;
+//     transition: outline-color 0.05s ease-in-out;
+//   }
+//   .al-input-disabled {
+//     opacity: 0.7;
+//   }
+//   .al-input-icon {
+//     position: absolute;
+//     top: 9px;
+//     right: 14px;
+//     svg {
+//       width: 27px;
+//       height: 27px;
+//       color: $placeholder-color;
+//       transition: color 0.05s ease-in-out;
+//     }
+//   }
+//   & .al-input:focus {
+//     border-color: $theme-blue;
+//     outline-color: $theme-blue;
+//   }
+//   & .al-input:focus ~ .al-input-icon {
+//     svg {
+//       color: $theme-blue;
+//     }
+//   }
+//   & .al-input:focus ~ label {
+//     color: $theme-blue;
+//     font-weight: 600;
+//   }
+// }
+
+// .al-input-icon-disabled {
+//   .al-input {
+//     padding-right: 24px;
+//   }
+//   .al-input-icon {
+//     display: none;
+//   }
+// }

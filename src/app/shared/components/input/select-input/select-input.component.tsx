@@ -8,6 +8,7 @@ import './select-input.component.scss'
 interface SelectProps {
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
   onBlur?: React.FocusEventHandler<HTMLSelectElement>
+  onKeyDown?: React.KeyboardEventHandler<HTMLSelectElement>
   name?: string
   label?: string
   placeholder?: string
@@ -24,6 +25,7 @@ const Select = React.forwardRef(
     const {
       onChange,
       onBlur,
+      onKeyDown,
       errors,
       value,
       name,
@@ -34,6 +36,7 @@ const Select = React.forwardRef(
       bindValue,
       disabled,
     } = selectProps
+    const formHasError = errors ? errors[name] : null
 
     const getOption = (index: number, value: any) => {
       if (typeof value == 'object') {
@@ -73,23 +76,33 @@ const Select = React.forwardRef(
     }
 
     return (
-      <>
+      <div
+        className={` 
+      al-select-wrapper
+      ${formHasError && 'ai-form-input-error'}`}
+      >
         <FormSelect
           aria-label="Default select example"
           value={value}
           name={name}
           onChange={onChange}
           onBlur={onBlur}
+          onKeyDown={onKeyDown}
           ref={ref}
+          disabled={disabled}
+          defaultValue=""
         >
-          {placeholder && (
-            <option disabled={true} onKeyDown={(e) => e.preventDefault()}>
-              {placeholder}
-            </option>
-          )}
+          <option
+            value={null || ''}
+            disabled
+            key={0}
+            onKeyDown={(e) => e.preventDefault()}
+          >
+            {placeholder}
+          </option>
           {options &&
             options.map((value, index) => {
-              return getOption(index, value)
+              return getOption(index + 1, value)
             })}
         </FormSelect>
         {errors && (
@@ -97,18 +110,14 @@ const Select = React.forwardRef(
             errors={errors}
             name={name}
             render={({ message }) => (
-              <div className="al-form-error-icon">
+              <div className={`${formHasError && 'al-form-error-message'}`}>
                 {camelCaseSeparator(message)}
               </div>
             )}
           />
         )}
-        {label && (
-          <label className={`${disabled && 'al-input-disabled'} `}>
-            {label}
-          </label>
-        )}
-      </>
+        {label && <label>{label}</label>}
+      </div>
     )
   }
 )
