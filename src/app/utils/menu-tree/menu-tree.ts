@@ -25,6 +25,11 @@ export const MenuTree: MenuTreeType[] = [
         isTree: false,
       },
       {
+        description: 'Register role permission',
+        path: '/registerrolepermission',
+        isTree: false,
+      },
+      {
         description: 'Register Multiple Task Test',
         path: '/registermultipletest',
         isTree: true,

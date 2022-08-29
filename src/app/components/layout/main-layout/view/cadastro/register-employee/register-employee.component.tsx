@@ -100,8 +100,8 @@ function RegisterEmployeeComponent(props: RegisterEmployeeProps) {
     if (!onChangeEmployee) {
       return
     }
-    const userData = data as RegisterEmployee
-    onChangeEmployee(userData)
+    const employeeData = data as RegisterEmployee
+    onChangeEmployee(employeeData)
   }
 
   return (

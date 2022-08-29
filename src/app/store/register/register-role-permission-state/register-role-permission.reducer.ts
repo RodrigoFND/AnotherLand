@@ -120,8 +120,9 @@ const addRegisterRolePermissionBuilder = (
   builder: ActionReducerMapBuilder<RegisterRolePermissionDataState>
 ): ActionReducerMapBuilder<RegisterRolePermissionDataState> => {
   return builder
-    .addCase(addRegisterRolePermission.fulfilled, () => {
+    .addCase(addRegisterRolePermission.fulfilled, (state, action) => {
       toastMessage.toastSuccess('Role permission registered successfully')
+      state.rolesPermission.push(action.payload)
     })
     .addCase(addRegisterRolePermission.rejected, (state, action) => {
       reducerErrorToast(action.payload as ErrorMessage)
@@ -189,7 +190,7 @@ const deleteRegisterRolePermissionBuilder = (
     .addCase(deleteRegisterRolePermission.fulfilled, (state, { payload }) => {
       toastMessage.toastSuccess('Register permission deleted successfully')
       state.rolesPermission = state.rolesPermission.filter(
-        (role) => role.id == payload
+        (role) => role.id != payload
       )
     })
     .addCase(deleteRegisterRolePermission.rejected, (state, action) => {
@@ -212,7 +213,7 @@ const registerRolePermissionSlice = createSlice({
   },
 })
 
-export const RegisterrolePermissionAction = {
+export const RegisterRolePermissionAction = {
   ...registerRolePermissionSlice.actions,
   getRegisterRolePermission,
   getRegisterRolePermissionById,

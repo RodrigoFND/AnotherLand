@@ -10,7 +10,7 @@ import {
   useAppSelector,
 } from '../../../../../../../store/hooks'
 import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
-import { RegisterrolePermissionAction } from '../../../../../../../store/register/register-role-permission-state/register-role-permission.reducer'
+import { RegisterRolePermissionAction } from '../../../../../../../store/register/register-role-permission-state/register-role-permission.reducer'
 
 function RegisterEmployeeLoader(props: Props) {
   const [user] = useState(useAppSelector((state) => state.auth.user))
@@ -91,7 +91,7 @@ function RegisterEmployeeLoader(props: Props) {
 
   const GetRoles = () => {
     return new Promise<MRegisterRolePermission[]>((resolve, reject) => {
-      dispatch(RegisterrolePermissionAction.getRegisterRolePermission(''))
+      dispatch(RegisterRolePermissionAction.getRegisterRolePermission(''))
         .unwrap()
         .then((response) => {
           resolve(response)

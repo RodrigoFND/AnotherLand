@@ -1,16 +1,20 @@
 import React from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
-const RegisterEmployeeRouter = React.lazy(
+const RegisterEmployeeRouterLazy = React.lazy(
   () => import('./register-employee/register-employee.router')
 )
 
-const RegisterTest1Router = React.lazy(
+const RegisterRolePermissionLazy = React.lazy(
+  () => import('./register-role-permission/register-role-permission.router')
+)
+
+const RegisterTest1RouterLazy = React.lazy(
   () =>
     import('./register-multiple-test/register-test-1/register-test-1-router')
 )
 
-const RegisterTaskRouter = React.lazy(
+const RegisterTaskRouterLazy = React.lazy(
   () => import('./register-task/register-task-router')
 )
 
@@ -24,7 +28,15 @@ function RegisterRouter() {
           path: 'registeremployee/*',
           element: (
             <React.Suspense fallback={<>...</>}>
-              <RegisterEmployeeRouter />
+              <RegisterEmployeeRouterLazy />
+            </React.Suspense>
+          ),
+        },
+        {
+          path: 'registerrolepermission/*',
+          element: (
+            <React.Suspense fallback={<>...</>}>
+              <RegisterRolePermissionLazy />
             </React.Suspense>
           ),
         },
@@ -32,7 +44,7 @@ function RegisterRouter() {
           path: 'registertask/*',
           element: (
             <React.Suspense fallback={<>...</>}>
-              <RegisterTaskRouter />
+              <RegisterTaskRouterLazy />
             </React.Suspense>
           ),
         },
@@ -43,7 +55,7 @@ function RegisterRouter() {
               path: 'test1/*',
               element: (
                 <React.Suspense fallback={<>...</>}>
-                  <RegisterTest1Router />
+                  <RegisterTest1RouterLazy />
                 </React.Suspense>
               ),
             },

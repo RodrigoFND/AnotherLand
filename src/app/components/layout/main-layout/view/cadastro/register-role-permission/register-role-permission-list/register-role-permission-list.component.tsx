@@ -1,10 +1,9 @@
-import './register-employee-list.component.scss'
+import './register-role-permission-list.component.scss'
 import { useNavigate } from 'react-router-dom'
 import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../../../store/hooks'
-import { RegisterEmployee } from '../../../../../../../model/Register/register-employee/register-employee.models'
 import { MMuiDataGrid, Props } from '../../../../../../../model/root/root-model'
 import CustomBreadcrumbComponent from '../../../../../../../shared/components/breadcrumb/custom-breadcrumb.component'
 import { Button, Col, Container, Row } from 'react-bootstrap'
@@ -19,16 +18,18 @@ import SearchInputMuiDataGrid from '../../../../../../../shared/components/input
 import { toastWarning } from '../../../../../../../shared/components/toast/toast.component'
 import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
 import { ERoles } from '../../../../../../../model/auth/auth.models'
-import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
+import { MRegisterRolePermission } from '../../../../../../../model/Register/register-role-permission/register-role-permission.model'
+import { RegisterRolePermissionAction } from '../../../../../../../store/register/register-role-permission-state/register-role-permission.reducer'
+import RegisterRolePermissionAddComponent from '../register-role-permission-add/register-role-permission-add.component'
 
-class MEmployeeGrid extends MMuiDataGrid {
-  employees: RegisterEmployee[]
-  onRowRemoveClick: (employee: RegisterEmployee) => void
+class MRegisterRolePermissionGrid extends MMuiDataGrid {
+  roles: MRegisterRolePermission[]
+  onRowRemoveClick: (role: MRegisterRolePermission) => void
 }
 
-const EmployeeGrid = (props: MEmployeeGrid) => {
-  const { filter, employees, onRowClick, onRowRemoveClick } = props
-  const columns: GridColumns<RegisterEmployee> = [
+const RolePermissionGrid = (props: MRegisterRolePermissionGrid) => {
+  const { filter, roles, onRowClick, onRowRemoveClick } = props
+  const columns: GridColumns<MRegisterRolePermission> = [
     {
       field: 'id',
       headerName: 'Id',
@@ -41,13 +42,7 @@ const EmployeeGrid = (props: MEmployeeGrid) => {
       headerName: 'Description',
       minWidth: 150,
       flex: 1,
-    },
-    {
-      field: 'inactive',
-      headerName: 'Inactive',
-      minWidth: 90,
-      flex: 0.3,
-      type: 'boolean',
+      editable: true,
     },
     {
       field: 'actions',
@@ -57,7 +52,9 @@ const EmployeeGrid = (props: MEmployeeGrid) => {
       getActions: (params: GridRowParams) => [
         <GridActionsCellItem
           key={0}
-          onClick={() => onRowRemoveClick(params.row as RegisterEmployee)}
+          onClick={() =>
+            onRowRemoveClick(params.row as MRegisterRolePermission)
+          }
           label="Delete"
           showInMenu
         />,
@@ -70,10 +67,10 @@ const EmployeeGrid = (props: MEmployeeGrid) => {
       <DataGrid
         filterModel={filter || undefined}
         columns={columns}
-        rows={employees}
+        rows={roles}
         onRowClick={onRowClick}
         getRowClassName={() => {
-          return 'al-register-employee-col'
+          return 'al-cursor-pointer'
         }}
         sx={{
           borderRadius: 2,
@@ -84,52 +81,52 @@ const EmployeeGrid = (props: MEmployeeGrid) => {
   )
 }
 
-function RegisterEmployeeListComponent(props: Props) {
+function RegisterRolePermissionListComponent(props: Props) {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const checkRolesPermission = useRolePermission()
-  const user = useAppSelector((state) => state.auth.user)
-  const employessData = useAppSelector(
-    (state) => state.registerEmployee.employees
+  const rolesData = useAppSelector(
+    (state) => state.registerRolePermission.rolesPermission
   )
-  const [employeesDataGridRows, setEmployeesDataGridRows] =
-    useState<RegisterEmployee[]>(employessData)
+  const [rolesDataGridRows, setRolesDataGridRows] =
+    useState<MRegisterRolePermission[]>(rolesData)
   const [gridFilter, setGridFilter] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    setEmployeesDataGridRows(employessData)
-  }, [employessData])
+    setRolesDataGridRows(rolesData)
+  }, [rolesData])
 
-  const openEmployeeEditPage = (GridRowParams: GridRowParams) => {
-    const employeeData = GridRowParams.row as RegisterEmployee
-    const isUserAdmin = user.id == 1
-    const isEmployeeAdmin = employeeData.roleId == 1
-    if (!isUserAdmin && isEmployeeAdmin) {
-      toastWarning('Only admin profile is allow to access this employee.')
-      return
-    }
+  const openRolesEditPage = (GridRowParams: GridRowParams) => {
+    const employeeData = GridRowParams.row as MRegisterRolePermission
     navigate(`../${employeeData.id}`)
   }
 
-  const openAddPage = () => {
-    navigate(`../add`, { replace: true })
-  }
-
-  const deleteEmployee = (employeeToDelete: RegisterEmployee) => {
+  const deleteRole = (roleToDelete: MRegisterRolePermission) => {
     if (!checkRolesPermission(ERoles.REMOVE)) {
-      toastWarning("User doesn't have permission to remove employee")
+      toastWarning("User doesn't have permission to remove role permission")
       return
     }
-    dispatch(RegisterEmployeeAction.deleteRegisterEmployee(employeeToDelete.id))
+    dispatch(
+      RegisterRolePermissionAction.deleteRegisterRolePermission(roleToDelete.id)
+    )
   }
 
   return (
     <>
       <CustomBreadcrumbComponent tree={props.tree} header={props.header}>
-        <Button className="al-btn-md al-btn-success" onClick={openAddPage}>
-          Add employee
+        <Button
+          className="al-btn-md al-btn-success"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Add role permission
         </Button>
       </CustomBreadcrumbComponent>
+
+      <RegisterRolePermissionAddComponent
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      ></RegisterRolePermissionAddComponent>
 
       <Container fluid className="al-form p-4">
         <Row>
@@ -140,12 +137,12 @@ function RegisterEmployeeListComponent(props: Props) {
               setFilter={setGridFilter}
             />
           </Col>
-          <Col sm={12} className="al-register-employee-datagrid">
-            <EmployeeGrid
-              employees={employeesDataGridRows}
+          <Col sm={12} className="al-register-role-permission-datagrid">
+            <RolePermissionGrid
+              roles={rolesDataGridRows}
               filter={gridFilter}
-              onRowClick={openEmployeeEditPage}
-              onRowRemoveClick={deleteEmployee}
+              onRowClick={openRolesEditPage}
+              onRowRemoveClick={deleteRole}
             />
           </Col>
         </Row>
@@ -154,4 +151,4 @@ function RegisterEmployeeListComponent(props: Props) {
   )
 }
 
-export default RegisterEmployeeListComponent
+export default RegisterRolePermissionListComponent

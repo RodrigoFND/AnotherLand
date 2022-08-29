@@ -1,0 +1,40 @@
+.al-modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 400px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.al-modal-header {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  background-color: $theme-blue;
+  color: white;
+  font-weight: $text-theme-h2-weight;
+  font-size: $text-theme-h2-size;
+}
+
+.al-modal-body {
+}
+
+.al-modal-footer {
+  display: flex;
+  border-top: $theme-border;
+  justify-content: flex-end;
+}
+
+.al-modal-sm {
+  min-width: 700px;
+}
+
+.al-modal-md {
+  min-width: 900px;
+}
+
+.al-modal-lg {
+  min-width: 1200px;
+  min-height: 400px;
+}
