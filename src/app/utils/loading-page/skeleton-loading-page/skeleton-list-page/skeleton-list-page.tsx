@@ -71,21 +71,6 @@ function SkeletonListPage() {
               height={48}
             />
           </Col>
-          {/* <Col className="mb-3" sm={12}>
-             
-                <Skeleton variant="rounded" height={48} />
-               
-                </Col>
-                <Col className="mb-3" sm={12}>
-             
-                <Skeleton variant="rounded" height={48} />
-               
-                </Col>
-                <Col className="mb-3" sm={12}>
-             
-                <Skeleton variant="rounded" height={48} />
-               
-                </Col> */}
         </Row>
       </Container>
     </>
