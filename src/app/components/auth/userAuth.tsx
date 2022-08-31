@@ -77,9 +77,7 @@ const UserAuth = () => {
     }
     const bufferTimeInMilisenconds = 4000
     const timeCloseToExpire = tokenTimeInMiliseconds - bufferTimeInMilisenconds
-    console.log('Validation starts')
     intervalForRestartValidation = setInterval(() => {
-      console.log('Validating')
       dispatch(AuthAction.loginWithToken(userData))
     }, timeCloseToExpire)
   }

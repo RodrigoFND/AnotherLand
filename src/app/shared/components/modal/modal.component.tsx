@@ -12,7 +12,6 @@ function ModalComponent(props: MModal) {
   const { isModalOpen, onCloseClick } = props
 
   const handleClose = () => {
-    console.log('handle close')
     if (!onCloseClick) {
       return
     }

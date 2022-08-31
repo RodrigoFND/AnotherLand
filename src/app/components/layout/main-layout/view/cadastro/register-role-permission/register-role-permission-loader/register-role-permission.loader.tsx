@@ -5,6 +5,7 @@ import { MRegisterRolePermission } from '../../../../../../../model/Register/reg
 import { Props } from '../../../../../../../model/root/root-model'
 import { useAppDispatch } from '../../../../../../../store/hooks'
 import { RegisterRolePermissionAction } from '../../../../../../../store/register/register-role-permission-state/register-role-permission.reducer'
+import SkeletonListPage from '../../../../../../../utils/loading-page/skeleton-loading-page/skeleton-list-page/skeleton-list-page'
 
 function RegisterRolePermissionLoader(props: Props) {
   const navigate = useNavigate()
@@ -66,7 +67,7 @@ function RegisterRolePermissionLoader(props: Props) {
     })
   }
 
-  return <>{isDependenciesLoaded ? props.children : 'LoadingDependencies'}</>
+  return <>{isDependenciesLoaded ? props.children : <SkeletonListPage />}</>
 }
 
 export default RegisterRolePermissionLoader

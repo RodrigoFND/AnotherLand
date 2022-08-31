@@ -35,7 +35,6 @@ function UserExpiredComponent() {
 
   const onSubmit = (data: FieldValues) => {
     const userData = data as UserLogin
-    console.log(data)
     dispatch(AuthAction.loginWithPassword(userData))
   }
 

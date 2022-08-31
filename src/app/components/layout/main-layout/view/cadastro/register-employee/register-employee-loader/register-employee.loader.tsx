@@ -11,6 +11,7 @@ import {
 } from '../../../../../../../store/hooks'
 import { RegisterEmployeeAction } from '../../../../../../../store/register/register-employee-state/register-employee.reducer'
 import { RegisterRolePermissionAction } from '../../../../../../../store/register/register-role-permission-state/register-role-permission.reducer'
+import SkeletonListPage from '../../../../../../../utils/loading-page/skeleton-loading-page/skeleton-list-page/skeleton-list-page'
 
 function RegisterEmployeeLoader(props: Props) {
   const [user] = useState(useAppSelector((state) => state.auth.user))
@@ -101,7 +102,7 @@ function RegisterEmployeeLoader(props: Props) {
         })
     })
   }
-  return <>{isDependenciesLoaded ? props.children : 'LoadingDependencies'}</>
+  return <>{isDependenciesLoaded ? props.children : <SkeletonListPage />}</>
 }
 
 export default RegisterEmployeeLoader

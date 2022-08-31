@@ -28,7 +28,6 @@ function LoginComponent() {
 
   const onSubmit = (data: FieldValues) => {
     const userData = data as UserLogin
-    console.log(data)
     dispatch(AuthAction.loginWithPassword(userData))
   }
 
@@ -64,9 +63,6 @@ function LoginComponent() {
                   errors={errors}
                   type="password"
                   icon={<RiLockPasswordFill />}
-                  onBlur={(event) => {
-                    console.log(event)
-                  }}
                 />
               </Col>
               <Col className="al-form-group mb-3 text-start " sm={12}>

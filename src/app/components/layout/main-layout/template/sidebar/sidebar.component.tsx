@@ -62,17 +62,7 @@ function Sidebar(props: SidebarProps) {
       ></AiOutlineClose>
       <div>
         {sideBarMenuRoot()}
-        <h1>Cadastro</h1>
         <ul>
-          <li>
-            <Link to="/register/registeremployee">Register employee</Link>
-          </li>
-          <li>
-            <Link to="/register/registertask">Register Task</Link>
-          </li>
-          <li>
-            <Link to="/register/registermultipletest/test1">Test1</Link>
-          </li>
           <Button onClick={() => logout()}>Logout</Button>
         </ul>
       </div>

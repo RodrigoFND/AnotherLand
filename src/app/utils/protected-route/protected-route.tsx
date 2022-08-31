@@ -7,9 +7,7 @@ import { useAppSelector } from '../../store/hooks'
 const ProtectedRoute = (props: Props) => {
   const authState = useAppSelector((state) => state.auth)
   const checkRolesPermission = useRolePermission()
-  console.log('changes Protected')
-  console.log(authState)
-  console.log(authState)
+  console.log('Protected route')
 
   if (authState.isAuthenticated == null) {
     return <></>

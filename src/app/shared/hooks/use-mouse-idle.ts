@@ -18,7 +18,6 @@ function useMouseIdle() {
     setIsIdle(false)
     clearTimeout(time)
     time = setTimeout(() => {
-      console.log('User Idle')
       setIsIdle(true)
     }, timeForIdle)
   }

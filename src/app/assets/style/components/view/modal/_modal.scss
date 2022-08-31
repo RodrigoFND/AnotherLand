@@ -38,3 +38,17 @@
   min-width: 1200px;
   min-height: 400px;
 }
+
+@media (max-width: 699px) {
+  .al-modal-sm {
+    max-width: 400px;
+    min-width: 400px;
+  }
+}
+
+@media (max-width: 300px) {
+  .al-modal-sm {
+    max-width: 288px;
+    min-width: 288px;
+  }
+}

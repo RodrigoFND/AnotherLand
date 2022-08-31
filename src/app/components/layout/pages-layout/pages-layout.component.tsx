@@ -3,7 +3,6 @@ import { useAppSelector } from '../../../store/hooks'
 
 function PagesLayout() {
   const authState = useAppSelector((state) => state.auth)
-  console.log('changes Layout')
   const location = useLocation()
   const isUserTimeExpired = () => {
     return authState.isAuthenticated == false && authState.user
