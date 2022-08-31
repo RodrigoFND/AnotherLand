@@ -98,6 +98,7 @@ function RegisterEmployeeListComponent(props: Props) {
 
   useEffect(() => {
     setEmployeesDataGridRows(employessData)
+    console.log(employessData)
   }, [employessData])
 
   const openEmployeeEditPage = (GridRowParams: GridRowParams) => {
@@ -112,6 +113,10 @@ function RegisterEmployeeListComponent(props: Props) {
   }
 
   const openAddPage = () => {
+    if (!checkRolesPermission(ERoles.ADD)) {
+      toastWarning("User doesn't have permission to add a new employee")
+      return
+    }
     navigate(`../add`, { replace: true })
   }
 

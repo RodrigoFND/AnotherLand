@@ -1,6 +1,7 @@
+import './register-role-permission-edit.component.scss'
 import { useNavigate } from 'react-router-dom'
 import { ERoles } from '../../../../../../../model/auth/auth.models'
-import { MMuiDataGrid, Props } from '../../../../../../../model/root/root-model'
+import { Props } from '../../../../../../../model/root/root-model'
 import { toastWarning } from '../../../../../../../shared/components/toast/toast.component'
 import useRolePermission from '../../../../../../../shared/hooks/use-role-permission'
 import {
@@ -8,7 +9,11 @@ import {
   useAppSelector,
 } from '../../../../../../../store/hooks'
 import * as yup from 'yup'
-import { MRegisterRolePermission } from '../../../../../../../model/Register/register-role-permission/register-role-permission.model'
+import {
+  MCustomPermission,
+  MRegisterRolePermission,
+  MRolePermission,
+} from '../../../../../../../model/Register/register-role-permission/register-role-permission.model'
 import { RegisterRolePermissionAction } from '../../../../../../../store/register/register-role-permission-state/register-role-permission.reducer'
 import CustomBreadcrumbComponent from '../../../../../../../shared/components/breadcrumb/custom-breadcrumb.component'
 import { Button, Container, Row, Col } from 'react-bootstrap'
@@ -17,71 +22,8 @@ import { FieldValues, useForm } from 'react-hook-form'
 import TextInput from '../../../../../../../shared/components/input/text-input/text-input.component'
 import { useEffect, useState } from 'react'
 import SearchInputMuiDataGrid from '../../../../../../../shared/components/input/search-input-mui-datagrid/search-input-mui-datagrid.component'
-import { DataGrid } from '@mui/x-data-grid/DataGrid/DataGrid'
-import { GridColumns } from '@mui/x-data-grid/models/colDef/gridColDef'
 import './register-role-permission-edit.component.tsx'
-import Checkbox from '@mui/material/Checkbox/Checkbox'
-
-interface MCustomRoleDataGrid {
-  id: number
-  path: string
-  canRead: boolean
-  canAdd: boolean
-  canEdit: boolean
-  canRemove: boolean
-}
-
-class MRegisterRolePermissionGrid extends MMuiDataGrid {
-  permissions: MCustomRoleDataGrid[]
-}
-
-const RolePermissionGrid = (props: MRegisterRolePermissionGrid) => {
-  const { filter, permissions } = props
-
-  // const handleRowEditCommit = (params) => {
-  //       const id = params.id;
-  //       const key = params.field;
-  //       const value = params.value;
-  //     },
-
-  const columns: GridColumns<MCustomRoleDataGrid> = [
-    {
-      field: 'path',
-      headerName: 'Path',
-      minWidth: 150,
-      flex: 1,
-    },
-    {
-      field: 'canRead',
-      headerName: 'Read',
-      minWidth: 150,
-      type: 'boolean',
-
-      renderCell: (params) => (
-        <Checkbox
-          checked={params.row.canRead}
-          // onClick={() => {params.api.setEditCellValue({ id: params.id, field:params.field, value: false })}}
-        />
-      ),
-    },
-  ]
-
-  return (
-    <>
-      <DataGrid
-        filterModel={filter || undefined}
-        columns={columns}
-        rows={permissions}
-        disableSelectionOnClick={true}
-        // onCellEditCommit={handleRowEditCommit}
-        sx={{
-          borderRadius: 2,
-          border: 0,
-        }}
-      />
-    </>
-  )
-}
+import RolePermissionGrid from './elements/permission-edit-grid/permission-edit-grid.component'
 
 const form = yup.object({
   id: yup.number().required(),
@@ -97,8 +39,10 @@ function RegisterRolePermissionEditComponent(props: Props) {
   const role = useAppSelector(
     (state) => state.registerRolePermission.rolePermission
   )
+  const [canEditDataGrid, setCanEditDataGrid] = useState(false)
   const {
     register,
+    getValues,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -106,14 +50,13 @@ function RegisterRolePermissionEditComponent(props: Props) {
     resolver: yupResolver(form),
   })
   const [gridFilter, setGridFilter] = useState(null)
-  const [permissionsDataGridRows, setPermissionsDataGridRows] = useState<
-    MCustomRoleDataGrid[]
-  >([])
+  const [permissionsDataGridRows, setPermissionsDataGridRows] = useState([])
 
   useEffect(() => {
     if (role) {
       inicializeForm()
       inicializeDataGrid()
+      checkCanEditPermission()
     }
   }, [role])
 
@@ -128,14 +71,59 @@ function RegisterRolePermissionEditComponent(props: Props) {
       const customPermission = {
         id: permission.id,
         path: permission.path,
-        canRead: permission.roles[ERoles.READ] != null,
-        canAdd: permission.roles[ERoles.ADD] != null,
-        canEdit: permission.roles[ERoles.EDIT] != null,
-        canRemove: permission.roles[ERoles.REMOVE] != null,
+        canRead: permission.roles.find((r) => r == ERoles.READ) != null,
+        canAdd: permission.roles.find((r) => r == ERoles.ADD) != null,
+        canEdit: permission.roles.find((r) => r == ERoles.EDIT) != null,
+        canRemove: permission.roles.find((r) => r == ERoles.REMOVE) != null,
       }
       return customPermission
     })
     setPermissionsDataGridRows(customPagePermission)
+  }
+
+  const checkCanEditPermission = () => {
+    const isRoleAdmin = role.id == 1
+    if (isRoleAdmin) {
+      setCanEditDataGrid(false)
+      return
+    }
+    if (checkRolesPermission(ERoles.EDIT)) {
+      setCanEditDataGrid(true)
+    } else {
+      setCanEditDataGrid(false)
+    }
+  }
+
+  const getChangeCustomPermissionToPermission = (
+    role: MCustomPermission
+  ): MRolePermission => {
+    const roles: ERoles[] = []
+    if (role.canAdd) {
+      roles.push(ERoles.ADD)
+    }
+    if (role.canEdit) {
+      roles.push(ERoles.EDIT)
+    }
+    if (role.canRead) {
+      roles.push(ERoles.READ)
+    }
+    if (role.canRemove) {
+      roles.push(ERoles.REMOVE)
+    }
+    const permission: MRolePermission = {
+      id: role.id,
+      path: role.path,
+      roles: roles,
+    }
+    return permission
+  }
+
+  const updatePermissionForm = (role: MCustomPermission) => {
+    let permissions: MRolePermission[] = getValues('pagesPermission')
+    const newPermission = getChangeCustomPermissionToPermission(role)
+    permissions = permissions.filter((p) => p.id != newPermission.id)
+    permissions.push(newPermission)
+    setValue('pagesPermission', permissions)
   }
 
   const updateRolePermission = (roleUpdated: MRegisterRolePermission) => {
@@ -210,8 +198,10 @@ function RegisterRolePermissionEditComponent(props: Props) {
                 setFilter={setGridFilter}
               />
             </Col>
-            <Col sm={12} className="al-register-role-permission-datagrid">
+            <Col sm={12} className="al-role-permission-edit-grid-datagrid">
               <RolePermissionGrid
+                onRowChanges={updatePermissionForm}
+                isEditPermited={canEditDataGrid}
                 permissions={permissionsDataGridRows}
                 filter={gridFilter}
               />

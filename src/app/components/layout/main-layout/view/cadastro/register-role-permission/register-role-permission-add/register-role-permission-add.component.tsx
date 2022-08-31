@@ -76,7 +76,7 @@ function RegisterRolePermissionAddComponent(
                 <Col sm={12} lg={12}>
                   <TextInput
                     label="Role name"
-                    placeholder="Enter a description"
+                    placeholder="Enter the role name"
                     {...register('description')}
                     name="description"
                     errors={errors}

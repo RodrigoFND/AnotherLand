@@ -188,7 +188,7 @@ const deleteRegisterRolePermissionBuilder = (
 ): ActionReducerMapBuilder<RegisterRolePermissionDataState> => {
   return builder
     .addCase(deleteRegisterRolePermission.fulfilled, (state, { payload }) => {
-      toastMessage.toastSuccess('Register permission deleted successfully')
+      toastMessage.toastSuccess('Role permission deleted successfully')
       state.rolesPermission = state.rolesPermission.filter(
         (role) => role.id != payload
       )

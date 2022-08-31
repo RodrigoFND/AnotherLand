@@ -9,6 +9,7 @@ const ProtectedRoute = (props: Props) => {
   const checkRolesPermission = useRolePermission()
   console.log('changes Protected')
   console.log(authState)
+  console.log(authState)
 
   if (authState.isAuthenticated == null) {
     return <></>

@@ -8,7 +8,9 @@ import { ErrorAction, ErrorMessage } from '../../../model/root/root-model'
 import { RegisterEmployeeService } from '../../../services/register-employee/register-employee.service'
 import { toastMessage } from '../../../shared/components/toast/toast.component'
 import reducerErrorToast from '../../../utils/reducer-error-toast/reducer-error-toast'
+import { AuthAction } from '../../auth-state/auth.reducer'
 import { SpinnerPageLoaderAction } from '../../spinner-page-loader-state/spinner-page-loader.reducer'
+import { RootState } from '../../store'
 
 type RegisterEmployeeStateData = {
   employees: RegisterEmployee[]
@@ -29,6 +31,7 @@ const getRegisterEmployee = createAsyncThunk<RegisterEmployee[], string>(
       const query = !payload ? '' : payload
       thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
       const { data } = await RegisterEmployeeService.GetRegisterEmployee(query)
+      console.log(data)
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data
     } catch (err) {
@@ -45,6 +48,8 @@ const getRegisterEmployeeBuilder = (
   return builder
     .addCase(getRegisterEmployee.fulfilled, (state, { payload }) => {
       if (payload) {
+        console.log('my payloads')
+        console.log(payload)
         state.employees = payload
       }
     })
@@ -129,6 +134,7 @@ const updateRegisterEmployee = createAsyncThunk<
       employeeData
     )
     thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
+
     return data as RegisterEmployee
   } catch (err) {
     const error: ErrorAction = err as ErrorAction
@@ -157,6 +163,10 @@ const deleteRegisterEmployee = createAsyncThunk<number, number>(
     try {
       thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
       await RegisterEmployeeService.DeleteRegisterEmployee(employeeId)
+      const states = thunkApi.getState() as RootState
+      if (states.auth.user.id == employeeId) {
+        thunkApi.dispatch(AuthAction.logout())
+      }
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return employeeId
     } catch (err) {

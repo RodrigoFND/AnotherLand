@@ -6,6 +6,15 @@ export interface MRegisterRolePermission {
   pagesPermission: MRolePermission[]
 }
 
+export interface MCustomPermission {
+  id: number
+  path: string
+  canRead: boolean
+  canAdd: boolean
+  canEdit: boolean
+  canRemove: boolean
+}
+
 export interface MRolePermission {
   id: number
   path: string
