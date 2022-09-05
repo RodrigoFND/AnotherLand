@@ -1,0 +1,78 @@
+.al-sidebar-ul-root {
+    display: block;
+    color: $theme-white_color;
+    padding-left: 0px;
+    cursor: pointer;
+    &:hover .al-sidebar-arrow-root {
+        transform: rotate(0deg);
+    }
+}
+
+.al-sidebar-ul-children {
+    display: block;
+    color: $theme-white_color;
+    padding: 11px;
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+        opacity: .95;
+        height: auto;
+        .al-sidebar-arrow-children {
+            transform: rotate(0deg);
+        }
+        .al-sidebar-li-container-children {
+            display: block;
+          
+            height: inherit
+        }
+    }
+}
+
+.al-sidebar-li-container-root {
+    border-left: $theme-border;
+    list-style: none;
+    padding-left: 32px;
+    position: relative;
+}
+
+
+.al-sidebar-li-container-children {
+    height: 0px;
+    padding-left: 32px;
+    list-style: none;
+    padding: 11px;
+    transition: all 0.7s ease-in-out;
+}
+
+.al-sidebar-li {
+    height: 50px;
+    border-radius: 12px;
+    padding: 11px;
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    &:hover{
+        opacity: .7;
+        cursor: pointer; 
+    }
+}
+
+.al-sidebar-arrow-root {
+    transform: rotate(180deg);
+    transition: transform 1s;
+}
+
+.al-sidebar-arrow-children {
+    transform: rotate(180deg);
+    transition: transform 1s;
+}
+
+.al-logout-container {
+    color: $theme-white_color;
+    &:hover{
+        opacity: .7;
+        cursor: pointer; 
+    }
+}

@@ -14,7 +14,7 @@ function Header(props: HeaderProps) {
         <Col sm={3}>
           <FaBars
             className="al-dropdown-sidebar-icon"
-            size={56}
+            size={45}
             onClick={() => props.toogleSidebar((value) => (value = !value))}
           />
         </Col>

@@ -1,8 +1,21 @@
-export const Menu = {
+import { IconType } from 'react-icons'
+import { BsFillPeopleFill } from 'react-icons/bs'
+
+export type MenuType = {
+  [index: string]: {
+    path: string
+    text: string
+    icon: any
+  }
+}
+
+export const Menu: MenuType = {
   register: {
     path: 'register',
     text: 'Register',
-    icon: 'icon-money',
+    icon: (props?: IconType) => {
+      return <BsFillPeopleFill {...props} />
+    },
   },
 }
 
@@ -11,6 +24,7 @@ export type MenuTreeType = {
   description: string
   isTree: boolean
   children?: MenuTreeType[]
+  icon?: any
 }
 
 export const MenuTree: MenuTreeType[] = [
