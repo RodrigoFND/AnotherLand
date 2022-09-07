@@ -118,7 +118,7 @@ function RegisterEmployeeComponent(props: RegisterEmployeeProps) {
         </Button>
       </CustomBreadcrumbComponent>
       <form>
-        <Container fluid className="al-form p-3">
+        <Container fluid className="al-form p-4">
           <Row className="al-form-group">
             {eRole == ERoles.EDIT && (
               <Col sm={6} lg={2} xl={2} className="mb-3">
