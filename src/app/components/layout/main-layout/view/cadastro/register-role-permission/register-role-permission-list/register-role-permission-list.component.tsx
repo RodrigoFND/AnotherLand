@@ -102,6 +102,14 @@ function RegisterRolePermissionListComponent(props: Props) {
     navigate(`../${employeeData.id}`)
   }
 
+  const addRole = () => {
+    if (!checkRolesPermission(ERoles.ADD)) {
+      toastWarning("User doesn't have permission to add a new role permission")
+      return
+    }
+    setIsModalOpen(true)
+  }
+
   const deleteRole = (roleToDelete: MRegisterRolePermission) => {
     if (!checkRolesPermission(ERoles.REMOVE)) {
       toastWarning("User doesn't have permission to remove role permission")
@@ -115,10 +123,7 @@ function RegisterRolePermissionListComponent(props: Props) {
   return (
     <>
       <CustomBreadcrumbComponent tree={props.tree} header={props.header}>
-        <Button
-          className="al-btn-md al-btn-success"
-          onClick={() => setIsModalOpen(true)}
-        >
+        <Button className="al-btn-md al-btn-success" onClick={addRole}>
           Add role permission
         </Button>
       </CustomBreadcrumbComponent>

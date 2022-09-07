@@ -1,78 +1,161 @@
-.al-sidebar-ul-root {
-    display: block;
+.al-side-bar {
+    height: 100%;
+    width: 0px;
+    background-color: $theme-blue;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.26s ease;
+    overflow: hidden;
+    z-index: 1000;
+  }
+
+.al-sidebar-small-window-open {
+    width: 60%;
+  }
+
+.al-sidebar-ul {
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+    width: 100%;
+    list-style: none;
     color: $theme-white_color;
-    padding-left: 0px;
-    cursor: pointer;
-    &:hover .al-sidebar-arrow-root {
+    transition: all 0.3s ease-in-out;
+    &  .al-sidebar-ul {
+        border-left: $theme-border;
+    }
+}
+
+.al-sidebar-li {
+    position: relative;
+    line-height: 34px;
+    overflow: clip;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:hover  > .al-sidebar-ul  {
+        max-height: 500px;
+    }
+    &:hover  > .al-sidebar-arrow  {
         transform: rotate(0deg);
     }
 }
 
-.al-sidebar-ul-children {
-    display: block;
-    color: $theme-white_color;
-    padding: 11px;
-    position: relative;
-
+.al-sidebar-li-link {
+    border-radius: 10px;
+   
+    a, button {
+        text-decoration: none; /* no underline */
+        background-color: inherit;
+        color: white;
+        width: 100%;
+        text-align: start;
+    }
     &:hover {
-        cursor: pointer;
-        opacity: .95;
-        height: auto;
-        .al-sidebar-arrow-children {
-            transform: rotate(0deg);
-        }
-        .al-sidebar-li-container-children {
-            display: block;
-          
-            height: inherit
+        background-color: white;
+        a, button {
+            color: $theme-blue;
         }
     }
 }
 
-.al-sidebar-li-container-root {
-    border-left: $theme-border;
-    list-style: none;
-    padding-left: 32px;
-    position: relative;
+.al-sidebar-text{
+    display: inline-block;
+    margin-left: 10px;
 }
 
-
-.al-sidebar-li-container-children {
-    height: 0px;
-    padding-left: 32px;
-    list-style: none;
-    padding: 11px;
-    transition: all 0.7s ease-in-out;
-}
-
-.al-sidebar-li {
-    height: 50px;
-    border-radius: 12px;
-    padding: 11px;
-    a, a:hover, a:focus, a:active {
-        text-decoration: none;
-        color: inherit;
-    }
-    &:hover{
-        opacity: .7;
-        cursor: pointer; 
-    }
-}
-
-.al-sidebar-arrow-root {
+.al-sidebar-arrow {
+    display: inline-block;
+    opacity: 0;
+    position: absolute;
+    right: 0;
     transform: rotate(180deg);
-    transition: transform 1s;
+    transition: all 0.3s ease-in-out;
 }
 
-.al-sidebar-arrow-children {
-    transform: rotate(180deg);
-    transition: transform 1s;
+.al-sibebar-icon {
+    display: inline-block;
 }
 
-.al-logout-container {
+.al-sidebar-close-icon {
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    margin-right: 12px;
+    margin-top: 8px;
+    position: absolute;
+    top: 0;
+    right: 0;
     color: $theme-white_color;
-    &:hover{
-        opacity: .7;
-        cursor: pointer; 
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
     }
 }
+
+.al-sidebar-logo-container {
+    margin-top: 27px;
+    margin-bottom: 27px;
+    text-align: center;
+}
+
+.al-sidebar-logo {
+    width: 33px;
+    height: 33px;
+    transform:scale(1.9);
+    transition: all 0.3s ease-in-out;
+   
+}
+
+.al-sidebar-ul .al-sidebar-ul {
+    margin: 4px;
+    padding: 0px 33px 0px 40px;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.al-sidebar-ul .al-sidebar-ul .al-sidebar-ul {
+    border: 0;
+    padding: 0px 10px 0px 20px;
+}
+
+.al-sidebar-ul .al-sidebar-ul .al-sidebar-li {
+    line-height: 45px;
+}
+
+@media (min-width: 760px) {
+
+    .al-side-bar {
+      width: 59px;
+    }
+    .al-side-bar:hover {
+      width: 360px;
+      
+      .al-sidebar-arrow {
+        opacity: 1;
+      }
+      .al-sidebar-logo {
+        transform:scale(3.5);
+      }
+      .al-sidebar-close-icon {
+        opacity: 1;
+    }
+
+    }
+}
+
+@media (max-width: 760px) {
+    .al-sidebar-arrow {
+        opacity: 1;
+      }
+    .al-sidebar-logo {
+        transform:scale(3.5);
+    }
+    .al-sidebar-close-icon {
+        opacity: 1;
+    }
+}
+  

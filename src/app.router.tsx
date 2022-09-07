@@ -9,6 +9,7 @@ import ResetPasswordComponent from './app/components/pages/reset-password/reset-
 import UserExpiredComponent from './app/components/pages/user-expired/user-expired.component'
 import { ERoles } from './app/model/auth/auth.models'
 import LoadingPage from './app/utils/loading-page/loading-page'
+import SkeletonListPage from './app/utils/loading-page/skeleton-loading-page/skeleton-list-page/skeleton-list-page'
 import ProtectedRoute from './app/utils/protected-route/protected-route'
 
 const RegisterRouter = React.lazy(
@@ -41,7 +42,7 @@ function AppRouter() {
         {
           path: 'register/*',
           element: (
-            <React.Suspense fallback={'Carregando'}>
+            <React.Suspense fallback={<SkeletonListPage />}>
               <RegisterRouter />
             </React.Suspense>
           ),

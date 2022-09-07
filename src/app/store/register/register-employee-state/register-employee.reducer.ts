@@ -31,7 +31,6 @@ const getRegisterEmployee = createAsyncThunk<RegisterEmployee[], string>(
       const query = !payload ? '' : payload
       thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
       const { data } = await RegisterEmployeeService.GetRegisterEmployee(query)
-      console.log(data)
       thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data
     } catch (err) {
@@ -48,8 +47,6 @@ const getRegisterEmployeeBuilder = (
   return builder
     .addCase(getRegisterEmployee.fulfilled, (state, { payload }) => {
       if (payload) {
-        console.log('my payloads')
-        console.log(payload)
         state.employees = payload
       }
     })

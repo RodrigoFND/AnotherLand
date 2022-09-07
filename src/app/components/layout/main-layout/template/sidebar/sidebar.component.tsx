@@ -1,22 +1,30 @@
-import { AiOutlineArrowDown } from 'react-icons/ai'
-
+import './sidebar.component.scss'
+import { Col, Container, Row, Image } from 'react-bootstrap'
+import {
+  AiOutlineArrowDown,
+  AiOutlineClose,
+  AiOutlineLogout,
+} from 'react-icons/ai'
 import { Link } from 'react-router-dom'
-// import { useAppDispatch } from '../../../../../store/hooks'
+import { Props } from '../../../../../model/root/root-model'
+import { AuthAction } from '../../../../../store/auth-state/auth.reducer'
+import { useAppDispatch } from '../../../../../store/hooks'
 import {
   Menu,
   MenuTree,
   MenuTreeType,
 } from '../../../../../utils/menu-tree/menu-tree'
+import logo from '../../../../../assets/img/al-icon.png'
 
-// class SidebarProps extends Props {
-//   toogleSidebar: React.Dispatch<React.SetStateAction<boolean>>
-// }
+class SidebarProps extends Props {
+  toogleSidebar: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-function Sidebar() {
-  // const dispatch = useAppDispatch()
-  // const logout = () => {
-  //   dispatch(AuthAction.logout())
-  // }
+function Sidebar(props: SidebarProps) {
+  const dispatch = useAppDispatch()
+  const logout = () => {
+    dispatch(AuthAction.logout())
+  }
 
   const sidebarRootChildren = (
     menuTree: MenuTreeType[],
@@ -24,24 +32,27 @@ function Sidebar() {
   ): JSX.Element[] => {
     return menuTree.map((menu) => {
       const treePath = path + menu.path
-      // const hasNextMenu = menuTree.indexOf(index,1)
       if (menu.isTree) {
         return (
           <>
-            <li key={treePath}>
-              {/* <a>{menu.description}</a>
-              <a>
+            <li key={treePath} className="al-sidebar-li">
+              <span className="al-sidebar-text">{menu.description}</span>
+              <i className="al-sidebar-arrow ">
                 <AiOutlineArrowDown />
-              </a> */}
-              <ul>{sidebarRootChildren(menu.children, treePath)}</ul>
+              </i>
+              <ul className="al-sidebar-ul ">
+                {sidebarRootChildren(menu.children, treePath)}
+              </ul>
             </li>
           </>
         )
       } else {
         return (
           <>
-            <li key={treePath}>
-              <Link to={treePath}>{menu.description}</Link>
+            <li key={treePath} className="al-sidebar-li al-sidebar-li-link">
+              <Link to={treePath} className="d-block">
+                <span className="al-sidebar-text">{menu.description}</span>
+              </Link>
             </li>
           </>
         )
@@ -50,29 +61,32 @@ function Sidebar() {
   }
 
   const sideBarMenuRoot = (): JSX.Element[] => {
-    return MenuTree.map((menu) => {
+    return MenuTree.map((menu, index) => {
       const menuName = menu.description.toLowerCase()
 
       return (
-        <ul key="">
+        <ul key={index} className="al-sidebar-ul ">
           {menu.isTree && (
-            <li key="">
-              <i>{Menu[menuName]?.icon({ size: 33 })}</i>
-              {/* <a>{menu.description}</a> */}
-              <i>
+            <li className="  al-sidebar-li">
+              <i className="al-sibebar-icon">
+                {Menu[menuName]?.icon({ size: 33 })}
+              </i>
+              <span className="al-sidebar-text">{menu.description}</span>
+              <i className="al-sidebar-arrow">
                 <AiOutlineArrowDown></AiOutlineArrowDown>
               </i>
-              <ul>{sidebarRootChildren(menu.children, menu.path)}</ul>
+              <ul className="al-sidebar-ul ">
+                {sidebarRootChildren(menu.children, menu.path)}
+              </ul>
             </li>
           )}
 
           {!menu.isTree && (
-            <li>
-              <i>{Menu[menuName]?.icon({ size: 33 })}</i>
-              {<Link to={menu.path}>{menu.description}</Link>}
-              {/* <a>
-                <AiOutlineArrowDown></AiOutlineArrowDown>
-              </a> */}
+            <li className="al-sidebar-li mt-1 mb-2 al-sidebar-li-link">
+              <Link to={menu.path} className="d-block">
+                <i>{Menu[menuName]?.icon({ size: 33 })}</i>
+                <span className="al-sidebar-text">{menu.description}</span>
+              </Link>
             </li>
           )}
         </ul>
@@ -81,45 +95,34 @@ function Sidebar() {
   }
   return (
     <>
-      {sideBarMenuRoot()}
-      {/* <Container>
-      <Row>
-        <Col>
-          <AiOutlineClose
-          className="al-dropdown-sidebar-icon"
-          onClick={() => props.toogleSidebar((value) => (value = !value))}
-        />
-      </Col>
-      </Row>
-      <Row>
-        <Col sm={12}>
-        
-        </Col>
-        <Col sm={12}>
-        <div className="d-flex al-logout-container" onClick={() => logout()}>
-          <div > <AiOutlineLogout size={33}/> </div>
-          <div className="ms-2 align-self-center">Logout</div>
-        </div>
-        </Col>
-      </Row>
-    </Container> */}
-
-      {/* <div>
-       
-        <h1>Cadastro</h1>
-        <ul>
-          <li>
-            <Link to="/register/registeremployee">Register employee</Link>
-          </li>
-          <li>
-            <Link to="/register/registertask">Register Task</Link>
-          </li>
-          <li>
-            <Link to="/register/registermultipletest/test1">Test1</Link>
-          </li>
-          
-        </ul>
-      </div> */}
+      <Container>
+        <Row>
+          <Col sm={12} className="al-sidebar-logo-container">
+            <div className="teste">
+              <Image className="al-sidebar-logo" src={logo}></Image>
+            </div>
+            <AiOutlineClose
+              className="al-sidebar-close-icon"
+              onClick={() => props.toogleSidebar((value) => (value = !value))}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12} className="mt-2">
+            {sideBarMenuRoot()}
+          </Col>
+          <Col sm={12}>
+            <ul className="al-sidebar-ul mt-1">
+              <li className="al-sidebar-li al-sidebar-li-link">
+                <button onClick={() => logout()}>
+                  <i>{<AiOutlineLogout size={33} />}</i>
+                  <span className="al-sidebar-text">Logout</span>
+                </button>
+              </li>
+            </ul>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }

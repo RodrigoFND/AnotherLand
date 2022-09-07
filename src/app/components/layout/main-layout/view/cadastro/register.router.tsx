@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
+import SkeletonListPage from '../../../../../utils/loading-page/skeleton-loading-page/skeleton-list-page/skeleton-list-page'
 
 const RegisterEmployeeRouterLazy = React.lazy(
   () => import('./register-employee/register-employee.router')
@@ -27,7 +28,7 @@ function RegisterRouter() {
         {
           path: 'registeremployee/*',
           element: (
-            <React.Suspense fallback={<>...</>}>
+            <React.Suspense fallback={<SkeletonListPage />}>
               <RegisterEmployeeRouterLazy />
             </React.Suspense>
           ),
@@ -35,7 +36,7 @@ function RegisterRouter() {
         {
           path: 'registerrolepermission/*',
           element: (
-            <React.Suspense fallback={<>...</>}>
+            <React.Suspense fallback={<SkeletonListPage />}>
               <RegisterRolePermissionLazy />
             </React.Suspense>
           ),
@@ -43,7 +44,7 @@ function RegisterRouter() {
         {
           path: 'registertask/*',
           element: (
-            <React.Suspense fallback={<>...</>}>
+            <React.Suspense fallback={<SkeletonListPage />}>
               <RegisterTaskRouterLazy />
             </React.Suspense>
           ),
@@ -54,7 +55,7 @@ function RegisterRouter() {
             {
               path: 'test1/*',
               element: (
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<SkeletonListPage />}>
                   <RegisterTest1RouterLazy />
                 </React.Suspense>
               ),

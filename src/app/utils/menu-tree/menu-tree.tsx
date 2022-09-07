@@ -17,6 +17,13 @@ export const Menu: MenuType = {
       return <BsFillPeopleFill {...props} />
     },
   },
+  novo: {
+    path: 'novo',
+    text: 'Novo',
+    icon: (props?: IconType) => {
+      return <BsFillPeopleFill {...props} />
+    },
+  },
 }
 
 export type MenuTreeType = {
@@ -54,6 +61,18 @@ export const MenuTree: MenuTreeType[] = [
             isTree: false,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '/novo',
+    description: 'Novo',
+    isTree: true,
+    children: [
+      {
+        description: 'Novo eee',
+        path: '/eee',
+        isTree: false,
       },
     ],
   },
