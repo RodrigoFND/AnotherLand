@@ -28,14 +28,11 @@ const getRegisterRolePermission = createAsyncThunk<
 >(`${namespace}/getRegisterRolePermission`, async (payload, thunkApi) => {
   try {
     const query = !payload ? '' : payload
-    thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
     const { data } =
       await RegisterRolePermissionService.GetRegisterRolePermission(query)
-    thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
     return data as MRegisterRolePermission[]
   } catch (err) {
     const error: ErrorAction = err as ErrorAction
-    thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
     return thunkApi.rejectWithValue(error.response.data)
   }
 })
@@ -63,16 +60,13 @@ const getRegisterRolePermissionById = createAsyncThunk<
   `${namespace}/getRegisterRolePermissionById`,
   async (permissionId, thunkApi) => {
     try {
-      thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
       const { data } =
         await RegisterRolePermissionService.GetRegisterRolePermissionById(
           permissionId
         )
-      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data
     } catch (err) {
       const error: ErrorAction = err as ErrorAction
-      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return thunkApi.rejectWithValue(error.response.data)
     }
   }

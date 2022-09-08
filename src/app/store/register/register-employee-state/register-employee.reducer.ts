@@ -29,13 +29,10 @@ const getRegisterEmployee = createAsyncThunk<RegisterEmployee[], string>(
   async (payload, thunkApi) => {
     try {
       const query = !payload ? '' : payload
-      thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
       const { data } = await RegisterEmployeeService.GetRegisterEmployee(query)
-      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data
     } catch (err) {
       const error: ErrorAction = err as ErrorAction
-      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return thunkApi.rejectWithValue(error.response.data)
     }
   }
@@ -61,15 +58,12 @@ const getRegisterEmployeeById = createAsyncThunk<RegisterEmployee, string>(
   `${namespace}/getRegisterEmployeeById`,
   async (userId, thunkApi) => {
     try {
-      thunkApi.dispatch(SpinnerPageLoaderAction.loadSpinner())
       const { data } = await RegisterEmployeeService.GetRegisterEmployeeById(
         userId
       )
-      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return data as RegisterEmployee
     } catch (err) {
       const error: ErrorAction = err as ErrorAction
-      thunkApi.dispatch(SpinnerPageLoaderAction.removeSpinnerQueueTime())
       return thunkApi.rejectWithValue(error.response.data)
     }
   }
