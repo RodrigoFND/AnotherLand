@@ -5,7 +5,8 @@ import { Props } from '../../../../../model/root/root-model'
 import { AuthAction } from '../../../../../store/auth-state/auth.reducer'
 import { useAppDispatch } from '../../../../../store/hooks'
 import logo from '../../../../../assets/img/al-icon.png'
-import SidebarULRootTree from './elements/sidebar-ul-root-tree.component'
+import { MenuTree } from '../../../../../utils/menu-tree/menu-tree'
+import { SidebarLIChildren } from './elements/sidebar-li-children-tree.component'
 
 class SidebarProps extends Props {
   toogleSidebar: React.Dispatch<React.SetStateAction<boolean>>
@@ -15,6 +16,17 @@ function Sidebar(props: SidebarProps) {
   const dispatch = useAppDispatch()
   const logout = () => {
     dispatch(AuthAction.logout())
+  }
+
+  const SidebarMenuTree = (props: Props): JSX.Element => {
+    return (
+      <ul className="al-sidebar-ul">
+        {MenuTree.map((menu, index) => {
+          return <SidebarLIChildren key={index} menu={menu} path={''} />
+        })}
+        {props.children}
+      </ul>
+    )
   }
 
   return (
@@ -33,17 +45,14 @@ function Sidebar(props: SidebarProps) {
         </Row>
         <Row>
           <Col sm={12} className="mt-2">
-            {SidebarULRootTree()}
-          </Col>
-          <Col sm={12}>
-            <ul className="al-sidebar-ul mt-1">
-              <li className="al-sidebar-li al-sidebar-li-link">
+            <SidebarMenuTree>
+              <li className="al-sidebar-li">
                 <button onClick={() => logout()}>
                   <i>{<AiOutlineLogout size={33} />}</i>
-                  <span className="al-sidebar-text">Logout</span>
+                  <span className="al-sidebar-text ">Logout</span>
                 </button>
               </li>
-            </ul>
+            </SidebarMenuTree>
           </Col>
         </Row>
       </Container>
